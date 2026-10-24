@@ -1,0 +1,320 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LunaOps — Lunar Mission Intelligence</title>
+  <style>
+    :root {
+      --bg: #100d19;
+      --panel: #1c1728;
+      --border: #352944;
+      --pink: #e8a0d4;
+      --purple: #bba4ff;
+      --mint: #8fe0c0;
+      --amber: #f3c779;
+      --text: #f7f1ff;
+      --muted: #b7aec8;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, Arial, sans-serif;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 22px 5%;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand { font-size: 22px; font-weight: 800; letter-spacing: 1px; }
+    .brand span { color: var(--pink); }
+    .status { color: var(--mint); font-size: 12px; }
+
+    main { max-width: 1150px; margin: auto; padding: 32px 5%; }
+
+    .eyebrow {
+      color: var(--pink);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    h1 { font-size: clamp(30px, 5vw, 48px); margin: 12px 0; }
+    h1 span { color: var(--purple); }
+    p { color: var(--muted); line-height: 1.7; }
+
+    .hero {
+      padding: 30px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: radial-gradient(ellipse at top right, #49305b 0%, #21182f 38%, #171220 78%);
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin: 32px 0 16px;
+    }
+
+    h2 { font-size: 19px; margin: 0; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      min-width: 0;
+    }
+
+    .metric { font-size: 27px; font-weight: 750; margin: 12px 0 4px; }
+    .small { font-size: 12px; color: var(--muted); }
+
+    select, button {
+      font: inherit;
+      border-radius: 10px;
+      padding: 11px 14px;
+    }
+
+    select {
+      color: var(--text);
+      background: #171220;
+      border: 1px solid var(--border);
+      max-width: 100%;
+    }
+
+    button {
+      cursor: pointer;
+      border: 1px solid var(--pink);
+      background: var(--pink);
+      color: #251329;
+      font-weight: 700;
+    }
+
+    button:hover { filter: brightness(1.08); }
+
+    .site-art {
+      height: 110px;
+      margin: 14px 0;
+      border-radius: 12px;
+      background:
+        radial-gradient(ellipse at 25% 90%, #8e759e 0 5%, transparent 6%),
+        radial-gradient(ellipse at 70% 75%, #5d4d77 0 12%, transparent 13%),
+        radial-gradient(ellipse at 45% 105%, #b3a0c8 0 23%, transparent 24%),
+        linear-gradient(145deg, #3a2c51, #171421);
+      border: 1px solid #544064;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .site-art::after {
+      content: "ILLUSTRATIVE TERRAIN";
+      position: absolute;
+      bottom: 9px;
+      left: 10px;
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      color: #fff;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      border: 1px solid #6e587f;
+      color: var(--purple);
+      border-radius: 20px;
+      padding: 5px 8px;
+    }
+
+    .compare-result {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 12px;
+      background: #14101e;
+      border: 1px solid var(--border);
+      white-space: pre-line;
+    }
+
+    .notice {
+      border-left: 3px solid var(--amber);
+      padding: 12px 15px;
+      background: #211c22;
+      border-radius: 0 10px 10px 0;
+      font-size: 13px;
+    }
+
+    footer {
+      margin-top: 30px;
+      padding: 22px 0;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    a { color: var(--purple); }
+
+    @media (max-width: 750px) {
+      .grid { grid-template-columns: 1fr; }
+      header { align-items: flex-start; }
+      .hero { padding: 22px; }
+      .section-head { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">LUNA<span>OPS</span></div>
+    <div class="status">● MISSION WORKSPACE</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="eyebrow">Lunar mission intelligence</div>
+      <h1>Explore the Moon.<br><span>Evaluate the unknown.</span></h1>
+      <p>
+        An educational workspace for exploring lunar south-pole candidate
+        regions, comparing terrain evidence, and understanding scientific
+        uncertainty.
+      </p>
+      <span class="tag">PROTOTYPE · DATA INTEGRATION IN PROGRESS</span>
+    </section>
+
+    <div class="section-head">
+      <h2>Mission overview</h2>
+      <span class="small">South-pole research workspace</span>
+    </div>
+
+    <section class="grid">
+      <article class="panel">
+        <div class="eyebrow">Study area</div>
+        <div class="metric">Lunar South Pole</div>
+        <p class="small">Region of interest for future exploration.</p>
+      </article>
+      <article class="panel">
+        <div class="eyebrow">Data source</div>
+        <div class="metric">NASA LOLA</div>
+        <p class="small">Lunar elevation and terrain products.</p>
+      </article>
+      <article class="panel">
+        <div class="eyebrow">Evidence status</div>
+        <div class="metric" style="color:var(--amber)">In progress</div>
+        <p class="small">Verified terrain values have not yet been loaded.</p>
+      </article>
+    </section>
+
+    <div class="section-head">
+      <h2>Candidate-site comparison</h2>
+      <span class="small">Choose two study areas</span>
+    </div>
+
+    <section class="grid">
+      <article class="panel">
+        <span class="tag">CANDIDATE A</span>
+        <div class="site-art"></div>
+        <h2>Site 01</h2>
+        <p>Candidate region for terrain-data investigation.</p>
+        <label for="siteA" class="small">Select study area</label><br><br>
+        <select id="siteA">
+          <option value="Site01">Site 01</option>
+          <option value="Site04">Site 04</option>
+        </select>
+      </article>
+
+      <article class="panel">
+        <span class="tag">CANDIDATE B</span>
+        <div class="site-art"></div>
+        <h2>Site 04</h2>
+        <p>Second candidate region for comparison.</p>
+        <label for="siteB" class="small">Select study area</label><br><br>
+        <select id="siteB">
+          <option value="Site04">Site 04</option>
+          <option value="Site01">Site 01</option>
+        </select>
+      </article>
+
+      <article class="panel">
+        <div class="eyebrow">Analysis tools</div>
+        <h2>Compare regions</h2>
+        <p>Review the selected study areas and their available evidence.</p>
+        <button id="compareBtn">Compare selected sites</button>
+        <div id="result" class="compare-result" aria-live="polite">
+          Select the study areas and start a comparison.
+        </div>
+      </article>
+    </section>
+
+    <div class="section-head">
+      <h2>Scientific data & limitations</h2>
+    </div>
+
+    <section class="panel">
+      <p>
+        <strong>Planned terrain analysis:</strong> elevation, slope,
+        data coverage, and measurement uncertainty, depending on the
+        available products.
+      </p>
+      <p>
+        <strong>NASA data archive:</strong>
+        <a href="https://pgda.gsfc.nasa.gov/data/LOLA_5mpp/" target="_blank" rel="noopener noreferrer">
+          LOLA 5 m/pixel products
+        </a>
+      </p>
+      <p>
+        <strong>Additional mission data:</strong>
+        <a href="https://science.nasa.gov/mission/lro/data-products/" target="_blank" rel="noopener noreferrer">
+          Lunar Reconnaissance Orbiter data products
+        </a>
+      </p>
+      <div class="notice">
+        Important: This initial version does not yet load or calculate
+        actual terrain measurements. The terrain artwork is illustrative.
+        A candidate region cannot be declared safe for landing from this
+        dashboard alone.
+      </div>
+    </section>
+
+    <footer>
+      LunaOps — Lunar Mission Intelligence · Independent educational prototype.
+      Not an official NASA application.
+    </footer>
+  </main>
+
+  <script>
+    const siteA = document.getElementById("siteA");
+    const siteB = document.getElementById("siteB");
+    const result = document.getElementById("result");
+
+    document.getElementById("compareBtn").addEventListener("click", () => {
+      const a = siteA.value;
+      const b = siteB.value;
+
+      if (a === b) {
+        result.textContent =
+          "Both selectors point to " + a +
+          ". Choose two different sites to compare them.";
+        return;
+      }
+
+      result.textContent =
+        "Study area A: " + a +
+        "\nStudy area B: " + b +
+        "\n\nComparison created successfully." +
+        "\nTerrain measurements are not loaded yet." +
+        "\nNext step: integrate verified NASA terrain data.";
+    });
+  </script>
+</body>
+</html>
