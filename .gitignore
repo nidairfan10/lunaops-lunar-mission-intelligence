@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+screenshots/
+data/*.tif
+data/*.tiff
+data/*.aux.xml
+*.before-*
+index_before_*.html
+horizons_server_before_timeline.py

@@ -1,0 +1,27 @@
+{
+  "status": "preliminary_unverified_alignment",
+  "source": "NASA LOLA regional roughness raster",
+  "pixel_resolution_m": 1000,
+  "metric_units": "m",
+  "site01": {
+    "name": "Connecting Ridge",
+    "pixels_sampled": 256,
+    "mean_m": 0.642,
+    "median_m": 0.631,
+    "min_m": 0.403,
+    "max_m": 0.964
+  },
+  "site04": {
+    "name": "Shackleton rim",
+    "pixels_sampled": 256,
+    "mean_m": 0.678,
+    "median_m": 0.677,
+    "min_m": 0.403,
+    "max_m": 1.192
+  },
+  "limitations": [
+    "Coordinate-reference alignment is not conclusively verified.",
+    "Values represent regional roughness at 1 km resolution.",
+    "These values do not certify landing safety."
+  ]
+}

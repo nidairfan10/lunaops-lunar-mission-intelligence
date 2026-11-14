@@ -1,0 +1,17 @@
+{
+  "site": "Site04",
+  "source": "NASA LOLA LDEM",
+  "units": "meters",
+  "width": 3200,
+  "height": 3200,
+  "pixel_size_m": [
+    5.0,
+    5.0
+  ],
+  "valid_pixels": 10240000,
+  "missing_pixels": 0,
+  "minimum_m": -2847.877197265625,
+  "maximum_m": 1805.0726318359375,
+  "mean_m": 245.3438,
+  "standard_deviation_m": 1246.3162681477759
+}

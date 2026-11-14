@@ -1,221 +1,2854 @@
 
-<!DOCTYPE html>
+
+    <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LunaOps — Lunar Mission Intelligence</title>
   <style>
-    :root {
-      --bg: #100d19;
-      --panel: #1c1728;
-      --border: #352944;
-      --pink: #e8a0d4;
-      --purple: #bba4ff;
-      --mint: #8fe0c0;
-      --amber: #f3c779;
-      --text: #f7f1ff;
-      --muted: #b7aec8;
-    }
+ body {
+  margin: 0;
+  background: radial-gradient(
+    ellipse at top,
+    #241538 0%,
+    #100c1a 55%,
+    #0c0913 100%
+  );
+  color: #f8f4ff;
+  font-family: Arial, sans-serif;
+}
+  .hero-title {
+    font-size: clamp(38px, 5.5vw, 68px);
+    line-height: 1.08;
+    letter-spacing: -2px;
+    font-weight: 800;
+    color: #f8f4ff;
+    margin: 18px 0;
+    text-shadow: 0 0 32px rgba(192, 132, 252, 0.12);
+  }
 
-    * { box-sizing: border-box; }
+  .hero-title span {
+    background: linear-gradient(90deg, #d8b4fe, #a78bfa, #c084fc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
 
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: Inter, system-ui, Arial, sans-serif;
-    }
+  .panel {
+  min-width: 0;
+  background: linear-gradient(145deg, #241936, #15101f);
+  border: 1px solid #49345f;
+  border-radius: 16px;
+  padding: 22px;
+  box-sizing: border-box;
+}
 
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 22px 5%;
-      border-bottom: 1px solid var(--border);
-    }
+button {
+background: linear-gradient(135deg, #d8b4fe, #a78bfa);
+color: #160e24;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    .brand { font-size: 22px; font-weight: 800; letter-spacing: 1px; }
-    .brand span { color: var(--pink); }
-    .status { color: var(--mint); font-size: 12px; }
+  button:hover {
+    background: #c084fc;
+  }
 
-    main { max-width: 1150px; margin: auto; padding: 32px 5%; }
+  .compare-result {
+    margin-top: 20px;
+    padding: 22px;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #191327, #100d19);
+    border: 1px solid #49345f;
+    border-left: 4px solid #c084fc;
+    color: #e9e2f5;
+    font-size: 14px;
+    line-height: 1.9;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  }
+  /* Main page layout */
+main {
+  width: min(1100px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 36px 0 60px;
+}
 
-    .eyebrow {
-      color: var(--pink);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
+/* Hero section */
+.hero {
+  padding: 36px 0 44px;
+  max-width: 850px;
+}
 
-    h1 { font-size: clamp(30px, 5vw, 48px); margin: 12px 0; }
-    h1 span { color: var(--purple); }
-    p { color: var(--muted); line-height: 1.7; }
+.hero p {
+  max-width: 680px;
+  line-height: 1.8;
+  color: #c9bddb;
+}
 
-    .hero {
-      padding: 30px;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      background: radial-gradient(ellipse at top right, #49305b 0%, #21182f 38%, #171220 78%);
-    }
+/* Mission overview heading */
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
 
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin: 32px 0 16px;
-    }
+/* Compact mission cards */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
 
-    h2 { font-size: 19px; margin: 0; }
-    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+/* Individual cards */
+.panel {
+  min-width: 0;
+  padding: 22px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #201630, #15101f);
+  border: 1px solid #49345f;
+  box-sizing: border-box;
+}
 
-    .panel {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      min-width: 0;
-    }
+/* Smaller screens */
+@media (max-width: 650px) {
+  main {
+    width: calc(100% - 28px);
+    padding-top: 20px;
+  }
 
-    .metric { font-size: 27px; font-weight: 750; margin: 12px 0 4px; }
-    .small { font-size: 12px; color: var(--muted); }
+  .grid {
+    grid-template-columns: 1fr;
+  }
 
-    select, button {
-      font: inherit;
-      border-radius: 10px;
-      padding: 11px 14px;
-    }
+  .hero {
+    padding: 24px 0 30px;
+  }
 
-    select {
-      color: var(--text);
-      background: #171220;
-      border: 1px solid var(--border);
-      max-width: 100%;
-    }
+  .section-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+/* Ultra Violet terrain statistics cards */
+.terrain-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
 
-    button {
-      cursor: pointer;
-      border: 1px solid var(--pink);
-      background: var(--pink);
-      color: #251329;
-      font-weight: 700;
-    }
+.terrain-card {
+  min-width: 0;
+  padding: 24px;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #241936, #15101f);
+  border: 1px solid #49345f;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  box-sizing: border-box;
+}
 
-    button:hover { filter: brightness(1.08); }
+.terrain-label {
+  display: block;
+  color: #c4b5fd;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
 
-    .site-art {
-      height: 110px;
-      margin: 14px 0;
-      border-radius: 12px;
-      background:
-        radial-gradient(ellipse at 25% 90%, #8e759e 0 5%, transparent 6%),
-        radial-gradient(ellipse at 70% 75%, #5d4d77 0 12%, transparent 13%),
-        radial-gradient(ellipse at 45% 105%, #b3a0c8 0 23%, transparent 24%),
-        linear-gradient(145deg, #3a2c51, #171421);
-      border: 1px solid #544064;
-      position: relative;
-      overflow: hidden;
-    }
+.terrain-card h3 {
+  margin: 12px 0 20px;
+  color: #f8f4ff;
+  font-size: 21px;
+}
 
-    .site-art::after {
-      content: "ILLUSTRATIVE TERRAIN";
-      position: absolute;
-      bottom: 9px;
-      left: 10px;
-      font-size: 9px;
-      letter-spacing: 1.5px;
-      color: #fff;
-    }
+.terrain-metric {
+  padding: 16px;
+  margin-bottom: 14px;
+  border-radius: 12px;
+  background: #302044;
+}
 
-    .tag {
-      display: inline-block;
-      font-size: 11px;
-      border: 1px solid #6e587f;
-      color: var(--purple);
-      border-radius: 20px;
-      padding: 5px 8px;
-    }
+.terrain-metric span,
+.terrain-detail span {
+  display: block;
+  color: #c9bddb;
+  font-size: 12px;
+  margin-bottom: 7px;
+}
 
-    .compare-result {
-      margin-top: 16px;
-      padding: 16px;
-      border-radius: 12px;
-      background: #14101e;
-      border: 1px solid var(--border);
-      white-space: pre-line;
-    }
+.terrain-metric strong {
+  display: block;
+  color: #d8b4fe;
+  font-size: clamp(22px, 3vw, 30px);
+  overflow-wrap: anywhere;
+}
 
-    .notice {
-      border-left: 3px solid var(--amber);
-      padding: 12px 15px;
-      background: #211c22;
-      border-radius: 0 10px 10px 0;
-      font-size: 13px;
-    }
+.terrain-metric small {
+  font-size: 14px;
+  color: #c4b5fd;
+}
 
-    footer {
-      margin-top: 30px;
-      padding: 22px 0;
-      border-top: 1px solid var(--border);
-      font-size: 12px;
-      color: var(--muted);
-    }
+.terrain-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid #3c2b4c;
+}
 
-    a { color: var(--purple); }
+.terrain-detail strong {
+  color: #e9d5ff;
+  text-align: right;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
 
-    @media (max-width: 750px) {
-      .grid { grid-template-columns: 1fr; }
-      header { align-items: flex-start; }
-      .hero { padding: 22px; }
-      .section-head { align-items: flex-start; flex-direction: column; }
-    }
-  </style>
+.terrain-source {
+  margin-top: 18px;
+  color: #b9a6ce;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.difference-card {
+  margin-top: 20px;
+  padding: 24px;
+  border-radius: 18px;
+  background: linear-gradient(120deg, #39224f, #21152f);
+  border: 1px solid #7953a0;
+}
+
+.difference-card > span {
+  color: #e9d5ff;
+  font-size: 13px;
+}
+
+.difference-card > strong {
+  display: block;
+  margin-top: 10px;
+  color: #d8b4fe;
+  font-size: clamp(26px, 4vw, 36px);
+  overflow-wrap: anywhere;
+}
+
+.difference-card p,
+.science-note {
+  color: #c9bddb;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.comparison-heading h3 {
+  color: #f8f4ff;
+  font-size: 26px;
+  margin: 10px 0;
+}
+
+.comparison-heading p {
+  color: #c9bddb;
+  line-height: 1.6;
+}
+
+@media (max-width: 650px) {
+  .terrain-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .terrain-card {
+    padding: 18px;
+  }
+}
+/* Top dashboard metric cards */
+.dashboard-metrics {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+  margin: 24px 0;
+}
+
+.metric-card {
+  min-width: 0;
+  padding: 18px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #241936, #15101f);
+  border: 1px solid #49345f;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  box-sizing: border-box;
+}
+
+.metric-card > span {
+  color: #c4b5fd;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.metric-card h3 {
+  margin: 14px 0;
+  color: #d8b4fe;
+  font-size: clamp(20px, 2vw, 28px);
+}
+
+.metric-card h3 small {
+  font-size: 13px;
+}
+
+.metric-card p {
+  color: #b9a6ce;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.sparkline {
+  height: 3px;
+  width: 100%;
+  margin: 14px 0;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #8b5cf6, #c084fc, #67e8f9);
+  opacity: 0.8;
+}
+
+@media (max-width: 900px) {
+  .dashboard-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 500px) {
+  .dashboard-metrics {
+    grid-template-columns: 1fr;
+  }
+}
+/* LunaOps central terrain visualization */
+.terrain-map-panel {
+  margin: 24px 0;
+  padding: 24px;
+  border: 1px solid #49345f;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #1b1027, #100b18);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+}
+
+.terrain-map-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.terrain-map-header h2 {
+  color: #f3e8ff;
+  margin: 10px 0;
+}
+
+.terrain-map-header p {
+  color: #b9a6ce;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+#terrainSite {
+  background: #241633;
+  color: #e9d5ff;
+  border: 1px solid #7953a0;
+  border-radius: 9px;
+  padding: 11px;
+}
+
+.terrain-map-image {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #654581;
+  border-radius: 12px;
+  background: #100b18;
+}
+
+.terrain-map-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1.6 / 1;
+  object-fit: contain;
+}
+
+.terrain-map-overlay {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 8px 11px;
+  border: 1px solid #7953a0;
+  border-radius: 7px;
+  background: rgba(20, 10, 31, 0.85);
+  color: #e9d5ff;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.terrain-map-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  color: #c4b5fd;
+  font-size: 10px;
+  letter-spacing: 0.7px;
+}
+
+.elevation-gradient {
+  flex: 1;
+  height: 7px;
+  border-radius: 8px;
+  background: linear-gradient(
+    90deg,
+    #1e1230,
+    #4e2b73,
+    #9369be,
+    #dccaf0
+  );
+}
+
+@media (max-width: 600px) {
+  .terrain-map-panel {
+    padding: 15px;
+  }
+
+  .terrain-map-image img {
+    aspect-ratio: 1 / 1;
+  }
+}
+/* Refined lunar terrain intelligence panel */
+.terrain-map-panel {
+  margin: 26px 0;
+  padding: 24px;
+  border: 1px solid #49345f;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #1b1027, #100b18);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.28);
+}
+
+.terrain-map-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+.terrain-map-header h2 {
+  color: #f5eaff;
+  margin: 10px 0 7px;
+  font-size: clamp(22px, 3vw, 30px);
+}
+
+.terrain-map-header p {
+  color: #b9a6ce;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.terrain-map-layout {
+  display: grid;
+  grid-template-columns: 185px minmax(0, 1fr);
+  gap: 20px;
+}
+
+.terrain-sidebar {
+  padding: 14px 0;
+  border-right: 1px solid #3c2b4c;
+}
+
+.terrain-sidebar-title {
+  display: block;
+  margin-bottom: 18px;
+  color: #c4b5fd;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+}
+
+.terrain-site-button {
+  display: block;
+  width: calc(100% - 14px);
+  padding: 12px;
+  margin-bottom: 12px;
+  text-align: left;
+  color: #d8c8e8;
+  background: #1b1227;
+  border: 1px solid #3c2b4c;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+.terrain-site-button.active {
+  background: linear-gradient(120deg, #39224f, #21152f);
+  border-color: #a78bfa;
+  box-shadow: 0 0 16px rgba(139, 92, 246, 0.12);
+}
+
+.terrain-site-button > span:first-child {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+}
+
+.terrain-site-button strong {
+  display: block;
+  margin-top: 7px;
+  color: #c4b5fd;
+  font-size: 11px;
+}
+
+.terrain-site-bar {
+  display: block;
+  height: 4px;
+  margin-top: 12px;
+  border-radius: 5px;
+  background: #382448;
+}
+
+.terrain-site-bar i {
+  display: block;
+  width: 68%;
+  height: 100%;
+  border-radius: 5px;
+  background: linear-gradient(90deg, #7c3aed, #d8b4fe);
+}
+
+.terrain-site-button[data-site="site04"] .terrain-site-bar i {
+  width: 88%;
+}
+
+.terrain-sidebar-note {
+  margin-top: 22px;
+  color: #b9a6ce;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 5px;
+  border-radius: 50%;
+  background: #a78bfa;
+  box-shadow: 0 0 8px #8b5cf6;
+}
+
+.terrain-map-main {
+  min-width: 0;
+}
+
+.terrain-map-image {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #654581;
+  border-radius: 10px;
+  background: #100b18;
+}
+
+.terrain-map-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1.6 / 1;
+  object-fit: contain;
+}
+
+.terrain-map-overlay {
+  position: absolute;
+  inset: 12px 12px auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.terrain-map-overlay span {
+  padding: 7px 9px;
+  border: 1px solid #654581;
+  border-radius: 5px;
+  background: rgba(20, 10, 31, 0.88);
+  color: #e9d5ff;
+  font-size: 9px;
+  letter-spacing: 0.7px;
+}
+
+.terrain-map-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+  color: #c4b5fd;
+  font-size: 9px;
+  letter-spacing: 0.6px;
+}
+
+.elevation-gradient {
+  flex: 1;
+  height: 7px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #1e1230, #4e2b73, #9369be, #dccaf0);
+}
+
+@media (max-width: 650px) {
+  .terrain-map-panel {
+    padding: 15px;
+  }
+
+  .terrain-map-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .terrain-sidebar {
+    border-right: none;
+    border-bottom: 1px solid #3c2b4c;
+    padding-bottom: 12px;
+  }
+
+  .terrain-site-button {
+    display: inline-block;
+    width: calc(50% - 8px);
+    vertical-align: top;
+  }
+
+  .terrain-map-image img {
+    aspect-ratio: 1 / 1;
+  }
+}
+.analysis-chart-panel {
+  margin: 24px 0;
+  padding: 24px;
+  border: 1px solid #49345f;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #241936, #15101f);
+}
+
+.analysis-chart-panel h2 {
+  margin: 10px 0;
+  color: #f5eaff;
+}
+
+.analysis-chart-panel > p {
+  color: #b9a6ce;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.comparison-chart {
+  display: grid;
+  gap: 22px;
+  margin: 28px 0;
+}
+
+.chart-row {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr) 80px;
+  align-items: center;
+  gap: 12px;
+  color: #e9d5ff;
+  font-size: 12px;
+}
+
+.chart-track {
+  height: 12px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #382448;
+}
+
+.chart-bar {
+  height: 100%;
+  border-radius: 10px;
+}
+
+.site01-bar {
+  width: 100%;
+  background: linear-gradient(90deg, #7c3aed, #c084fc);
+}
+
+.site04-bar {
+  width: 21.5%;
+  background: linear-gradient(90deg, #6366f1, #a5b4fc);
+}
+
+.variability-site01 {
+  width: 33.9%;
+  background: linear-gradient(90deg, #ec4899, #f9a8d4);
+}
+
+.variability-site04 {
+  width: 100%;
+  background: linear-gradient(90deg, #ec4899, #f9a8d4);
+}
+
+.site01-slope-bar {
+  width: 60.95%;
+  background: linear-gradient(90deg, #7c3aed, #c084fc);
+}
+
+.site04-slope-bar {
+  width: 100%;
+  background: linear-gradient(90deg, #6366f1, #a5b4fc);
+}
+
+.site01-low-slope-bar {
+  width: 100%;
+  background: linear-gradient(90deg, #10b981, #6ee7b7);
+}
+
+.site04-low-slope-bar {
+  width: 51.62%;
+  background: linear-gradient(90deg, #0d9488, #5eead4);
+}
+
+
+@media (max-width: 500px) {
+  .analysis-chart-panel {
+    padding: 16px;
+  }
+
+  .chart-row {
+    grid-template-columns: 90px minmax(0, 1fr) 68px;
+    gap: 8px;
+    font-size: 10px;
+  }
+}
+/* Terrain suitability score bars */
+.site01-suitability-bar {
+  width: 36.44%;
+  background: linear-gradient(90deg, #10b981, #6ee7b7);
+}
+
+.site04-suitability-bar {
+  width: 18.81%;
+  background: linear-gradient(90deg, #0d9488, #5eead4);
+}
+/* Terrain Suitability — cleaner layout */
+.suitability-panel {
+  padding: 28px;
+}
+
+.suitability-intro {
+  margin-bottom: 28px;
+  line-height: 1.7;
+}
+
+.suitability-site {
+  margin-top: 24px;
+  padding: 20px;
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  border-radius: 16px;
+  background: rgba(139, 92, 246, 0.06);
+}
+
+.suitability-site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 18px;
+}
+
+.suitability-site-label {
+  display: inline-block;
+  margin-bottom: 7px;
+  color: #c4b5fd;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.suitability-site h3 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.suitability-score {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+  text-align: right;
+}
+
+.suitability-score strong {
+  color: #c4b5fd;
+  font-size: 23px;
+  white-space: nowrap;
+}
+
+.suitability-score span {
+  color: #a8a2bd;
+  font-size: 11px;
+}
+
+.suitability-track {
+  width: 100%;
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.suitability-track .chart-bar {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.5s ease;
+}
+
+.suitability-note {
+  margin-top: 26px;
+  padding: 18px;
+  border-left: 3px solid #a78bfa;
+  border-radius: 8px;
+  background: rgba(139, 92, 246, 0.07);
+  line-height: 1.7;
+}
+
+.suitability-note p {
+  margin: 8px 0 0;
+}
+
+@media (max-width: 600px) {
+  .suitability-panel {
+    padding: 18px;
+  }
+
+  .suitability-site {
+    padding: 16px;
+  }
+
+  .suitability-site-header {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .suitability-site h3 {
+    font-size: 15px;
+  }
+
+  .suitability-score strong {
+    font-size: 19px;
+  }
+
+  .suitability-score span {
+    max-width: 100px;
+  }
+}
+.site01-suitability-bar {
+  background: linear-gradient(90deg, #8b5cf6, #c4b5fd);
+}
+
+.site04-suitability-bar {
+  background: linear-gradient(90deg, #0d9488, #5eead4);
+}
+/* Slope distribution chart */
+.distribution-site {
+  margin-top: 26px;
+  padding: 20px;
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  border-radius: 16px;
+  background: rgba(139, 92, 246, 0.05);
+}
+
+.distribution-site h3 {
+  margin: 0 0 20px;
+  font-size: 16px;
+}
+
+.distribution-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+
+.distribution-row {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr) 64px;
+  align-items: center;
+  gap: 12px;
+}
+
+.distribution-label {
+  color: #c4b5fd;
+  font-size: 13px;
+}
+
+.distribution-track {
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.distribution-bar {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.5s ease;
+}
+
+.distribution-value {
+  text-align: right;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 600px) {
+  .distribution-site {
+    padding: 14px;
+  }
+  .distribution-row {
+    grid-template-columns: 60px minmax(0, 1fr) 56px;
+    gap: 8px;
+  }
+
+  .distribution-label,
+  .distribution-value {
+    font-size: 11px;
+  }
+}
+/* Lunar Slope Maps */
+.slope-map-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 24px 0 18px;
+}
+
+.slope-map-controls label {
+  color: #c4b5fd;
+  font-size: 14px;
+}
+
+#slopeMapSite {
+  background: #211a38;
+  color: #fff;
+  border: 1px solid rgba(167, 139, 250, 0.4);
+  border-radius: 10px;
+  padding: 11px 14px;
+  font: inherit;
+  max-width: 100%;
+}
+.slope-map-frame {
+  padding: 14px;
+  margin-top: 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(167, 139, 250, 0.32);
+  background: linear-gradient(
+    145deg,
+    rgba(30, 24, 50, 0.95),
+    rgba(13, 10, 27, 0.98)
+  );
+  overflow: hidden;
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.slope-map-frame:hover {
+  border-color: rgba(167, 139, 250, 0.65);
+  box-shadow:
+    0 16px 38px rgba(0, 0, 0, 0.36),
+    0 0 22px rgba(139, 92, 246, 0.10);
+}
+
+#slopeMapImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+.slope-map-legend {
+  margin-top: 22px;
+  padding: 18px 20px;
+  border: 1px solid rgba(167, 139, 250, 0.18);
+  border-radius: 16px;
+  background: rgba(30, 24, 50, 0.48);
+}
+
+.slope-map-legend-heading,
+.slope-map-legend-labels {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.slope-map-legend-heading {
+  color: #e9e3ff;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.slope-map-legend-heading strong {
+  font-size: 14px;
+  letter-spacing: 0.3px;
+}
+
+.slope-map-legend-heading span {
+  color: #b9aecf;
+}
+
+.slope-map-gradient {
+  height: 15px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    #440154,
+    #3b528b,
+    #21918c,
+    #5ec962,
+    #fde725
+  );
+  box-shadow: 0 0 14px rgba(94, 201, 98, 0.12);
+}
+
+.slope-map-legend-labels {
+  color: #c4b5fd;
+  font-size: 11px;
+  margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+  .slope-map-controls {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  #slopeMapSite {
+    width: 100%;
+  }
+}
+/* Terrain Risk & Limitations */
+#terrainLimitations {
+  margin-top: 32px;
+  padding: 24px;
+  border: 1px solid rgba(167, 139, 250, 0.22);
+  border-radius: 22px;
+  background: linear-gradient(
+    145deg,
+    rgba(30, 24, 50, 0.72),
+    rgba(13, 10, 27, 0.82)
+  );
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
+
+#terrainLimitations .risk-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin: 24px 0;
+}
+
+#terrainLimitations .risk-card {
+  position: relative;
+  padding: 24px;
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  border-radius: 18px;
+  background: linear-gradient(
+    145deg,
+    rgba(139, 92, 246, 0.12),
+    rgba(30, 24, 50, 0.58)
+  );
+  transition: transform 0.25s ease, border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+#terrainLimitations .risk-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(167, 139, 250, 0.48);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.22);
+}
+
+#terrainLimitations .risk-card h3 {
+  margin: 16px 0 10px;
+  color: #f3efff;
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+#terrainLimitations .risk-card p {
+  color: #c4b5d9;
+  font-size: 13px;
+  line-height: 1.75;
+  margin-bottom: 0;
+}
+
+#terrainLimitations .risk-tag {
+  display: inline-block;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: rgba(52, 211, 153, 0.12);
+  border: 1px solid rgba(52, 211, 153, 0.2);
+  color: #6ee7b7;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+#terrainLimitations .risk-tag.pending {
+  background: rgba(251, 191, 36, 0.12);
+  border-color: rgba(251, 191, 36, 0.2);
+  color: #fcd34d;
+}
+
+#terrainLimitations .science-note {
+  padding: 17px 20px;
+  border: 1px solid rgba(167, 139, 250, 0.16);
+  border-left: 3px solid #a78bfa;
+  border-radius: 0 13px 13px 0;
+  background: rgba(139, 92, 246, 0.08);
+  color: #d4c9ed;
+  line-height: 1.75;
+}
+
+@media (max-width: 650px) {
+  #terrainLimitations {
+    padding: 18px;
+  }
+
+  #terrainLimitations .risk-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #terrainLimitations .risk-card {
+    padding: 19px;
+  }
+}
+/* Slope Intelligence — new statistic bars */
+.site01-median-slope-bar,
+.site01-five-slope-bar {
+  background: linear-gradient(90deg, #8b5cf6, #c4b5fd);
+  height: 100%;
+  border-radius: inherit;
+  transition: width 0.4s ease;
+}
+
+.site04-median-slope-bar,
+.site04-five-slope-bar {
+  background: linear-gradient(90deg, #06b6d4, #67e8f9);
+  height: 100%;
+  border-radius: inherit;
+  transition: width 0.4s ease;
+}
+/* TERRAIN RISK INDICATORS — VISUAL UPGRADE */
+
+#terrainRiskPanel {
+  margin-top: 28px;
+}
+
+#terrainRiskPanel .terrain-risk-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 28px;
+}
+
+#terrainRiskPanel .risk-card {
+  position: relative;
+  overflow: hidden;
+  padding: 24px;
+  border: 1px solid rgba(167, 139, 250, 0.22);
+  border-radius: 20px;
+  background:
+    linear-gradient(145deg,
+      rgba(139, 92, 246, 0.12),
+      rgba(15, 23, 42, 0.65));
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+#terrainRiskPanel .risk-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(167, 139, 250, 0.6);
+}
+
+#terrainRiskPanel .risk-card h3 {
+  margin: 0 0 12px;
+  font-size: 17px;
+  color: #e9ddff;
+}
+
+#terrainRiskPanel .risk-card > p:not(.science-note) {
+  color: #aab3c5;
+  font-size: 13px;
+  line-height: 1.6;
+  min-height: 42px;
+}
+
+#terrainRiskPanel .risk-values {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 17px;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+#terrainRiskPanel .risk-values span {
+  color: #aab3c5;
+  font-size: 13px;
+}
+
+#terrainRiskPanel .risk-values strong {
+  color: #c4b5fd;
+  font-size: 20px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+#terrainRiskPanel .risk-card:nth-child(2) .risk-values strong {
+  color: #67e8f9;
+}
+
+#terrainRiskPanel .risk-card:nth-child(3) .risk-values strong {
+  color: #f0abfc;
+}
+
+#terrainRiskPanel .risk-card .science-note {
+  margin-top: 18px;
+  padding: 12px;
+  border-left: 3px solid #a78bfa;
+  border-radius: 6px;
+  background: rgba(167, 139, 250, 0.08);
+  color: #c4c9d6;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  #terrainRiskPanel .terrain-risk-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  #terrainRiskPanel .terrain-risk-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* MISSION SITE DECISION ENGINE — VISUAL POLISH */
+
+#missionDecisionEngine {
+  margin-top: 28px;
+  padding: 30px;
+  border: 1px solid rgba(167, 139, 250, 0.22);
+  border-radius: 22px;
+  background: linear-gradient(
+    145deg,
+    rgba(30, 27, 55, 0.95),
+    rgba(12, 20, 39, 0.98)
+  );
+}
+
+#missionDecisionEngine h2 {
+  color: #f1edff;
+  font-size: 27px;
+  letter-spacing: -0.7px;
+  margin: 10px 0;
+}
+
+#missionDecisionEngine > p {
+  color: #aab3c5;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+#missionDecisionEngine h3 {
+  color: #e9ddff;
+  margin-top: 26px;
+  font-size: 18px;
+}
+
+#missionDecisionEngine .decision-score-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 25px;
+}
+
+#missionDecisionEngine .decision-score-card {
+  padding: 22px;
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  border-radius: 17px;
+  background: rgba(139, 92, 246, 0.08);
+}
+
+#missionDecisionEngine .decision-score-card strong {
+  display: block;
+  color: #c4b5fd;
+  font-size: 35px;
+  margin: 12px 0;
+  font-variant-numeric: tabular-nums;
+}
+
+#missionDecisionEngine .decision-score-card small {
+  font-size: 14px;
+  color: #9ca3b8;
+}
+
+#missionDecisionEngine .decision-score-track {
+  height: 7px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+#missionDecisionEngine .decision-score-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #8b5cf6, #67e8f9);
+  border-radius: 20px;
+}
+
+#missionDecisionEngine .decision-result {
+  margin-top: 22px;
+  padding: 22px;
+  border-radius: 16px;
+  border: 1px solid rgba(103, 232, 249, 0.2);
+  background: rgba(34, 211, 238, 0.06);
+}
+
+#missionDecisionEngine .decision-result h3 {
+  color: #67e8f9;
+  font-size: 22px;
+  margin: 10px 0;
+}
+
+#missionDecisionEngine .decision-breakdown {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+#missionDecisionEngine .decision-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  padding: 17px;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+#missionDecisionEngine .decision-row span {
+  color: #e9ddff;
+  font-weight: 600;
+}
+
+#missionDecisionEngine .decision-measurements {
+  color: #9caec8;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+#missionDecisionEngine .decision-row strong {
+  color: #c4b5fd;
+  font-size: 17px;
+  font-variant-numeric: tabular-nums;
+}
+
+#missionDecisionEngine .science-note {
+  margin-top: 24px;
+  padding: 16px;
+  border-left: 3px solid #a78bfa;
+  border-radius: 8px;
+  background: rgba(167, 139, 250, 0.08);
+  color: #c2c9d7;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+@media (max-width: 600px) {
+  #missionDecisionEngine {
+    padding: 19px;
+  }
+
+  #missionDecisionEngine .decision-score-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* DECISION ENGINE METHODOLOGY */
+
+#decisionMethodology {
+  margin-top: 26px;
+  padding: 30px;
+  border: 1px solid rgba(103, 232, 249, 0.18);
+  border-radius: 22px;
+  background: linear-gradient(
+    145deg,
+    rgba(15, 35, 53, 0.95),
+    rgba(12, 20, 39, 0.98)
+  );
+}
+
+#decisionMethodology h2 {
+  color: #e8f7ff;
+  font-size: 26px;
+  margin: 10px 0;
+}
+
+#decisionMethodology h3 {
+  color: #a5f3fc;
+  font-size: 18px;
+  margin: 24px 0 12px;
+}
+
+#decisionMethodology p,
+#decisionMethodology li {
+  color: #aab8ca;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+#decisionMethodology .methodology-intro,
+#decisionMethodology .methodology-block {
+  padding: 20px;
+  margin-top: 22px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+#decisionMethodology .methodology-intro h3 {
+  margin-top: 0;
+}
+
+#decisionMethodology .methodology-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+  margin-top: 18px;
+}
+
+#decisionMethodology .method-card {
+  position: relative;
+  padding: 21px;
+  border-radius: 15px;
+  background: rgba(139, 92, 246, 0.08);
+  border: 1px solid rgba(167, 139, 250, 0.17);
+}
+
+#decisionMethodology .method-card h4 {
+  color: #e9ddff;
+  font-size: 16px;
+  margin: 12px 0;
+}
+
+#decisionMethodology .method-card p {
+  margin-bottom: 0;
+}
+
+#decisionMethodology .method-weight {
+  display: inline-block;
+  padding: 6px 11px;
+  border-radius: 8px;
+  background: rgba(167, 139, 250, 0.13);
+  color: #c4b5fd;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+#decisionMethodology .method-formula {
+  padding: 15px;
+  margin: 13px 0;
+  border-radius: 10px;
+  background: rgba(103, 232, 249, 0.06);
+  border-left: 3px solid #67e8f9;
+}
+
+#decisionMethodology .method-formula strong {
+  color: #67e8f9;
+  font-size: 13px;
+}
+
+#decisionMethodology .method-formula p {
+  color: #e0f7ff;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+#decisionMethodology ul {
+  padding-left: 22px;
+}
+
+#decisionMethodology li {
+  margin: 7px 0;
+}
+
+#decisionMethodology .methodology-footer {
+  margin-top: 25px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+  color: #8294ac;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+@media (max-width: 650px) {
+  #decisionMethodology {
+    padding: 19px;
+  }
+
+  #decisionMethodology .methodology-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* DECISION ENGINE TRANSPARENCY */
+
+#decisionTransparency {
+  margin-top: 26px;
+  padding: 30px;
+  border: 1px solid rgba(103, 232, 249, 0.2);
+  border-radius: 22px;
+  background: linear-gradient(
+    145deg,
+    rgba(17, 35, 53, 0.96),
+    rgba(12, 20, 39, 0.98)
+  );
+}
+
+#decisionTransparency h2 {
+  color: #e8f7ff;
+  font-size: 26px;
+  margin: 10px 0;
+}
+
+#decisionTransparency h3 {
+  color: #a5f3fc;
+  font-size: 18px;
+  margin: 28px 0 16px;
+}
+
+#decisionTransparency p {
+  color: #aab8ca;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+#decisionTransparency .weight-distribution {
+  display: grid;
+  gap: 17px;
+  padding: 21px;
+  margin-top: 18px;
+  border-radius: 15px;
+  background: rgba(255,255,255,.035);
+}
+
+#decisionTransparency .weight-heading,
+#decisionTransparency .contribution-row > div:first-child,
+#decisionTransparency .contribution-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+#decisionTransparency .weight-heading span,
+#decisionTransparency .contribution-row span {
+  color: #cbd5e1;
+  font-size: 13px;
+}
+
+#decisionTransparency .weight-heading strong {
+  color: #67e8f9;
+  font-size: 14px;
+}
+
+#decisionTransparency .weight-track,
+#decisionTransparency .contribution-track {
+  height: 8px;
+  margin-top: 9px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: rgba(255,255,255,.08);
+}
+
+#decisionTransparency .weight-fill,
+#decisionTransparency .contribution-fill {
+  height: 100%;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #8b5cf6, #67e8f9);
+}
+
+#decisionTransparency .contribution-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 17px;
+  margin-top: 18px;
+}
+
+#decisionTransparency .contribution-card {
+  padding: 21px;
+  border-radius: 16px;
+  border: 1px solid rgba(167,139,250,.18);
+  background: rgba(139,92,246,.07);
+}
+
+#decisionTransparency .contribution-card h4 {
+  color: #e9ddff;
+  font-size: 16px;
+  margin: 0 0 20px;
+}
+
+#decisionTransparency .contribution-row {
+  margin: 16px 0;
+}
+
+#decisionTransparency .contribution-row strong {
+  color: #c4b5fd;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+#decisionTransparency .contribution-total {
+  padding-top: 17px;
+  margin-top: 20px;
+  border-top: 1px solid rgba(255,255,255,.1);
+}
+
+#decisionTransparency .contribution-total span {
+  color: #aab8ca;
+  font-size: 12px;
+}
+
+#decisionTransparency .contribution-total strong {
+  color: #67e8f9;
+  font-size: 17px;
+}
+
+#decisionTransparency .transparency-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+
+#decisionTransparency .transparency-info {
+  padding: 20px;
+  border-radius: 15px;
+  background: rgba(255,255,255,.035);
+  border: 1px solid rgba(255,255,255,.07);
+}
+
+#decisionTransparency .info-label {
+  color: #67e8f9;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+#decisionTransparency .transparency-info h4 {
+  color: #e9ddff;
+  margin: 12px 0;
+}
+
+#decisionTransparency .transparency-note {
+  margin-top: 22px;
+  padding: 17px;
+  border-left: 3px solid #a78bfa;
+  border-radius: 9px;
+  background: rgba(167,139,250,.08);
+  color: #c2c9d7;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+@media(max-width:650px) {
+  #decisionTransparency {
+    padding: 19px;
+  }
+
+  #decisionTransparency .contribution-grid,
+  #decisionTransparency .transparency-info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* LUNAOPS — SENSITIVITY ANALYSIS */
+
+#sensitivityAnalysis {
+  margin-top: 26px;
+  padding: 30px;
+  border: 1px solid rgba(103, 232, 249, 0.2);
+  border-radius: 22px;
+  background: linear-gradient(
+    145deg,
+    rgba(19, 37, 56, 0.96),
+    rgba(12, 20, 39, 0.98)
+  );
+}
+
+#sensitivityAnalysis h2 {
+  color: #e8f7ff;
+  font-size: 26px;
+  margin: 10px 0;
+}
+
+#sensitivityAnalysis h3 {
+  color: #c4b5fd;
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+#sensitivityAnalysis p {
+  color: #aab8ca;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+#sensitivityAnalysis .sensitivity-scenario {
+  margin-top: 18px;
+  padding: 22px;
+  border-radius: 16px;
+  border: 1px solid rgba(167, 139, 250, 0.18);
+  background: rgba(139, 92, 246, 0.07);
+}
+
+#sensitivityAnalysis .scenario-label {
+  color: #67e8f9;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+#sensitivityAnalysis .sensitivity-scores {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+
+#sensitivityAnalysis .sensitivity-scores div {
+  padding: 15px;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+#sensitivityAnalysis .sensitivity-scores span {
+  display: block;
+  color: #aab8ca;
+  font-size: 12px;
+}
+
+#sensitivityAnalysis .sensitivity-scores strong {
+  display: block;
+  color: #c4b5fd;
+  font-size: 26px;
+  margin-top: 7px;
+  font-variant-numeric: tabular-nums;
+}
+
+#sensitivityAnalysis .sensitivity-conclusion {
+  margin-top: 22px;
+  padding: 22px;
+  border-radius: 15px;
+  border: 1px solid rgba(103, 232, 249, 0.2);
+  background: rgba(34, 211, 238, 0.06);
+}
+
+#sensitivityAnalysis .sensitivity-conclusion h3 {
+  color: #67e8f9;
+}
+
+#sensitivityAnalysis .science-note {
+  margin-top: 20px;
+  padding: 15px;
+  border-left: 3px solid #a78bfa;
+  border-radius: 8px;
+  background: rgba(167, 139, 250, 0.08);
+  font-size: 12px;
+}
+
+@media(max-width: 600px) {
+  #sensitivityAnalysis {
+    padding: 19px;
+  }
+}
+/* LUNAOPS — INTERACTIVE WEIGHT SIMULATOR */
+
+#weightSimulator {
+  margin-top: 26px;
+  padding: 30px;
+  border: 1px solid rgba(167,139,250,.25);
+  border-radius: 22px;
+  background: linear-gradient(
+    145deg,
+    rgba(35,25,61,.96),
+    rgba(12,20,39,.98)
+  );
+}
+
+#weightSimulator h2 {
+  color: #f1edff;
+  font-size: 26px;
+  margin: 10px 0;
+}
+
+#weightSimulator h3 {
+  color: #e9ddff;
+}
+
+#weightSimulator p {
+  color: #aab8ca;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+#weightSimulator .simulator-controls {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 18px;
+  margin-top: 25px;
+}
+
+#weightSimulator .simulator-control {
+  padding: 19px;
+  border-radius: 14px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.07);
+}
+
+#weightSimulator .simulator-control label {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  color: #dbeafe;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+#weightSimulator .simulator-control label strong {
+  color: #c4b5fd;
+}
+
+#weightSimulator input[type="range"] {
+  width: 100%;
+  margin-top: 17px;
+  accent-color: #a78bfa;
+  cursor: pointer;
+}
+
+#weightSimulator .weight-total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 12px;
+  background: rgba(103,232,249,.07);
+  color: #aab8ca;
+}
+
+#weightSimulator .weight-total strong {
+  color: #67e8f9;
+}
+
+#weightSimulator .simulator-warning {
+  margin-top: 14px;
+  color: #fbbf24;
+  font-size: 12px;
+}
+
+#weightSimulator .simulator-results {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 16px;
+  margin-top: 23px;
+}
+
+#weightSimulator .simulator-result-card {
+  padding: 22px;
+  border-radius: 16px;
+  background: rgba(139,92,246,.08);
+  border: 1px solid rgba(167,139,250,.2);
+}
+
+#weightSimulator .simulator-result-card > span {
+  color: #a78bfa;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+#weightSimulator .simulator-result-card h3 {
+  font-size: 15px;
+}
+
+#weightSimulator .simulator-result-card > strong {
+  color: #c4b5fd;
+  font-size: 32px;
+  font-variant-numeric: tabular-nums;
+}
+
+#weightSimulator .simulator-result-card small {
+  color: #9ca3b8;
+}
+
+#weightSimulator .simulator-track {
+  height: 7px;
+  margin-top: 16px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: rgba(255,255,255,.08);
+}
+
+#weightSimulator .simulator-track div {
+  height: 100%;
+  border-radius: 20px;
+  background: linear-gradient(90deg,#8b5cf6,#67e8f9);
+  transition: width .2s ease;
+}
+
+#weightSimulator .simulator-conclusion {
+  margin-top: 22px;
+  padding: 22px;
+  border-radius: 15px;
+  background: rgba(103,232,249,.06);
+  border: 1px solid rgba(103,232,249,.2);
+}
+
+#weightSimulator .simulator-conclusion h3 {
+  color: #67e8f9;
+}
+
+#weightSimulator #resetSimulator {
+  margin-top: 20px;
+  padding: 12px 18px;
+  border: 1px solid rgba(167,139,250,.4);
+  border-radius: 10px;
+  background: rgba(139,92,246,.14);
+  color: #e9ddff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+#weightSimulator #resetSimulator:hover {
+  background: rgba(139,92,246,.25);
+}
+
+@media(max-width:650px) {
+  #weightSimulator {
+    padding: 19px;
+  }
+
+  #weightSimulator .simulator-controls,
+  #weightSimulator .simulator-results {
+    grid-template-columns: 1fr;
+  }
+}
+/* SCENARIO COMPARISON + DATA CONFIDENCE */
+
+#scenarioComparison,
+#dataConfidence {
+  margin-top: 28px;
+  padding: 28px;
+  border: 1px solid rgba(125, 150, 255, 0.22);
+  border-radius: 20px;
+  background: linear-gradient(
+    145deg,
+    rgba(19, 29, 62, 0.96),
+    rgba(10, 17, 40, 0.98)
+  );
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.22);
+}
+
+#scenarioComparison h2,
+#dataConfidence h2 {
+  margin: 10px 0 12px;
+  color: #f2f5ff;
+  font-size: 25px;
+  letter-spacing: 0.2px;
+}
+
+#scenarioComparison > p,
+#dataConfidence > p {
+  color: #aebbd8;
+  line-height: 1.7;
+  max-width: 760px;
+  margin-bottom: 24px;
+}
+
+#scenarioComparison .simulator-results,
+#dataConfidence .simulator-results {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+#scenarioComparison .simulator-result-card,
+#dataConfidence .simulator-result-card {
+  min-width: 0;
+  padding: 21px;
+  border: 1px solid rgba(130, 157, 255, 0.2);
+  border-radius: 15px;
+  background: rgba(31, 43, 81, 0.55);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+#scenarioComparison .simulator-result-card:hover,
+#dataConfidence .simulator-result-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(100, 220, 255, 0.55);
+}
+
+#scenarioComparison .simulator-result-card span,
+#dataConfidence .simulator-result-card span {
+  display: block;
+  margin-bottom: 12px;
+  color: #76d9f5;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+}
+
+#scenarioComparison .simulator-result-card h3,
+#dataConfidence .simulator-result-card h3 {
+  margin: 0 0 15px;
+  color: #f0f3ff;
+  font-size: 18px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+#scenarioComparison .simulator-result-card p,
+#dataConfidence .simulator-result-card p {
+  color: #c1cbe2;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+#scenarioComparison .simulator-result-card strong,
+#dataConfidence .simulator-result-card strong {
+  color: #80e2f5;
+}
+
+#scenarioComparison .simulator-conclusion,
+#dataConfidence .simulator-conclusion {
+  margin-top: 24px;
+  padding: 22px;
+  border: 1px solid rgba(99, 215, 245, 0.25);
+  border-left: 4px solid #63d7f5;
+  border-radius: 13px;
+  background: rgba(30, 67, 93, 0.24);
+}
+
+#scenarioComparison .simulator-conclusion h3,
+#dataConfidence .simulator-conclusion h3 {
+  color: #eaf8ff;
+  font-size: 19px;
+  margin: 10px 0;
+  line-height: 1.45;
+}
+
+#scenarioComparison .simulator-conclusion p,
+#dataConfidence .simulator-conclusion p {
+  color: #b9c9df;
+  line-height: 1.75;
+}
+
+#scenarioComparison .science-note,
+#dataConfidence .science-note {
+  margin-top: 20px;
+  padding: 14px 17px;
+  border-radius: 10px;
+  background: rgba(140, 115, 255, 0.09);
+  border: 1px solid rgba(140, 115, 255, 0.2);
+  color: #b9c1e2;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+@media (max-width: 850px) {
+  #scenarioComparison .simulator-results,
+  #dataConfidence .simulator-results {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  #scenarioComparison,
+  #dataConfidence {
+    padding: 19px;
+  }
+
+  #scenarioComparison .simulator-results,
+  #dataConfidence .simulator-results {
+    grid-template-columns: 1fr;
+  }
+}
+/* LUNAR TERRAIN MAP — VISUAL UPGRADE */
+
+.terrain-map-main {
+  padding: 12px;
+  border: 1px solid rgba(147, 112, 219, 0.22);
+  border-radius: 18px;
+  background: linear-gradient(
+    145deg,
+    rgba(30, 21, 49, 0.8),
+    rgba(14, 12, 29, 0.95)
+  );
+}
+
+.terrain-map-image {
+  border: 1px solid rgba(167, 139, 250, 0.4);
+  border-radius: 14px;
+  background: #0b0915;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.terrain-map-image img {
+  transition: transform 0.35s ease;
+}
+
+.terrain-map-image:hover img {
+  transform: scale(1.015);
+}
+
+.terrain-map-overlay span {
+  padding: 9px 12px;
+  border: 1px solid rgba(167, 139, 250, 0.4);
+  border-radius: 7px;
+  background: rgba(12, 10, 28, 0.88);
+  color: #e9ddff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  backdrop-filter: blur(8px);
+}
+
+.terrain-map-overlay span:last-child {
+  color: #75e3ff;
+  border-color: rgba(117, 227, 255, 0.4);
+}
+
+.terrain-map-footer {
+  padding: 12px 5px 3px;
+  color: #c7b9e8;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.elevation-gradient {
+  height: 9px;
+  background: linear-gradient(
+    90deg,
+    #17102a,
+    #48276f,
+    #8152b7,
+    #b99ae0,
+    #f0e5ff
+  );
+  box-shadow: 0 0 12px rgba(167, 139, 250, 0.2);
+}
+
+/* STUDY AREA COMPARISON CHART */
+
+.comparison-chart {
+  gap: 25px;
+  padding: 22px;
+  border: 1px solid rgba(147, 112, 219, 0.2);
+  border-radius: 14px;
+  background: rgba(15, 12, 29, 0.55);
+}
+
+.chart-row {
+  grid-template-columns: 125px minmax(0, 1fr) 85px;
+  gap: 14px;
+  font-size: 12px;
+}
+
+.chart-row > span {
+  color: #d9c9f5;
+  font-weight: 600;
+}
+
+.chart-row > strong {
+  color: #f0e8ff;
+  text-align: right;
+  font-size: 13px;
+}
+
+.chart-track {
+  height: 11px;
+  background: rgba(125, 91, 158, 0.2);
+  border: 1px solid rgba(167, 139, 250, 0.12);
+}
+
+.chart-bar {
+  box-shadow: 0 0 12px rgba(167, 139, 250, 0.22);
+  transition: width 0.5s ease;
+}
+
+.analysis-chart-panel:has(.comparison-chart) {
+  border-color: rgba(147, 112, 219, 0.3);
+  background: linear-gradient(
+    145deg,
+    rgba(34, 24, 55, 0.96),
+    rgba(15, 12, 29, 0.98)
+  );
+}
+
+/* MOBILE LAYOUT */
+
+@media (max-width: 650px) {
+  .terrain-map-main {
+    padding: 9px;
+  }
+
+  .terrain-map-footer {
+    gap: 8px;
+    font-size: 8px;
+  }
+
+  .comparison-chart {
+    padding: 14px;
+  }
+}
+
+@media (max-width: 500px) {
+  .chart-row {
+    grid-template-columns: 90px minmax(0, 1fr) 68px;
+    gap: 8px;
+    font-size: 10px;
+  }
+}
+
+/* LUNAOPS HORIZON INTELLIGENCE */
+.luna-horizon-section {
+  margin: 36px auto;
+  padding: 28px;
+  max-width: 1200px;
+  border: 1px solid rgba(211, 137, 211, 0.28);
+  border-radius: 20px;
+  background: linear-gradient(145deg, rgba(35, 22, 48, 0.96), rgba(14, 17, 34, 0.98));
+  color: #f5edf8;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.22);
+}
+.luna-horizon-section * { box-sizing: border-box; }
+.luna-horizon-eyebrow {
+  color: #d99bd8;
+  font-size: 0.76rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.luna-horizon-section h2 {
+  color: #fff;
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  margin: 9px 0;
+}
+.luna-horizon-intro {
+  color: #c9bfd1;
+  line-height: 1.65;
+  max-width: 760px;
+}
+.luna-horizon-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+.luna-horizon-control {
+  padding: 16px;
+  border: 1px solid rgba(217,155,216,0.2);
+  border-radius: 13px;
+  background: rgba(255,255,255,0.035);
+}
+.luna-horizon-control label {
+  display: block;
+  color: #d8c8df;
+  font-size: 0.85rem;
+  margin-bottom: 9px;
+}
+.luna-horizon-control select,
+.luna-horizon-control input[type="date"] {
+  width: 100%;
+  min-height: 42px;
+  border-radius: 8px;
+  border: 1px solid #72577f;
+  padding: 8px 11px;
+  color: #fff;
+  background: #21192e;
+  font: inherit;
+}
+.luna-horizon-control input[type="range"] {
+  width: 100%;
+  accent-color: #d58bd1;
+  margin-top: 12px;
+}
+.luna-horizon-time {
+  color: #f0b8ed;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.luna-horizon-load {
+  border: 0;
+  border-radius: 9px;
+  padding: 13px 20px;
+  background: linear-gradient(100deg, #bd75b9, #8756a5);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  font: inherit;
+}
+.luna-horizon-load:disabled { opacity: 0.55; cursor: wait; }
+.luna-horizon-status {
+  display: inline-block;
+  margin-left: 12px;
+  color: #c9bfd1;
+  font-size: 0.86rem;
+}
+.luna-horizon-results {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: 18px;
+  margin-top: 24px;
+}
+.luna-horizon-card {
+  padding: 19px;
+  border: 1px solid rgba(217,155,216,0.2);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.035);
+}
+.luna-horizon-card h3 {
+  margin: 0 0 15px;
+  color: #f1d8ef;
+  font-size: 1.05rem;
+}
+.luna-horizon-compass {
+  display: block;
+  width: 100%;
+  max-width: 390px;
+  margin: auto;
+}
+.luna-horizon-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.luna-horizon-metric {
+  padding: 15px;
+  border-radius: 11px;
+  background: rgba(255,255,255,0.045);
+}
+.luna-horizon-metric small {
+  display: block;
+  color: #c5b5ce;
+  margin-bottom: 8px;
+}
+.luna-horizon-metric strong {
+  display: block;
+  font-size: 1.25rem;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+.luna-horizon-sun { color: #f4c36d !important; }
+.luna-horizon-earth { color: #80c9e8 !important; }
+.luna-horizon-warning {
+  margin-top: 20px;
+  padding: 14px 16px;
+  border-left: 3px solid #d8a45f;
+  border-radius: 7px;
+  background: rgba(216,164,95,0.09);
+  color: #ead9bd;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+.luna-horizon-source {
+  color: #a99bb3;
+  font-size: 0.78rem;
+  margin-top: 16px;
+}
+@media (max-width: 720px) {
+  .luna-horizon-section { padding: 19px; }
+  .luna-horizon-controls,
+  .luna-horizon-results { grid-template-columns: 1fr; }
+  .luna-horizon-status { display: block; margin: 12px 0 0; }
+}
+
+
+/* LunaOps Horizon Intelligence */
+.horizon-panel {
+  margin: 28px 0;
+  padding: 28px;
+  border: 1px solid rgba(218, 126, 205, .28);
+  border-radius: 20px;
+  background: linear-gradient(145deg, rgba(37, 25, 49, .96), rgba(16, 19, 35, .98));
+}
+.horizon-panel h2 { margin: 8px 0; }
+.horizon-panel-intro { max-width: 760px; line-height: 1.65; }
+.horizon-controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 14px;
+  margin: 22px 0;
+}
+.horizon-controls label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: .88rem;
+}
+.horizon-controls select,
+.horizon-controls input {
+  width: 100%;
+  padding: 12px;
+  color: inherit;
+  background: rgba(12, 14, 28, .9);
+  border: 1px solid rgba(218, 126, 205, .35);
+  border-radius: 10px;
+}
+.horizon-button {
+  align-self: end;
+  min-height: 43px;
+  padding: 10px 18px;
+  color: #fff;
+  background: linear-gradient(100deg, #a94e9e, #d17dbb);
+  border: 0;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.horizon-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) minmax(250px, 1fr);
+  gap: 26px;
+  align-items: center;
+}
+.horizon-plot-wrap { display: flex; justify-content: center; }
+.horizon-plot {
+  width: 280px;
+  height: 280px;
+  max-width: 100%;
+  position: relative;
+  border: 1px solid rgba(218, 126, 205, .55);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(191, 111, 183, .12), rgba(12, 16, 34, .7) 72%);
+}
+.horizon-ring {
+  position: absolute;
+  border: 1px solid rgba(218, 126, 205, .22);
+  border-radius: 50%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.horizon-ring.ring-mid { width: 66%; height: 66%; }
+.horizon-ring.ring-inner { width: 33%; height: 33%; }
+.horizon-crosshair {
+  position: absolute;
+  background: rgba(218, 126, 205, .18);
+}
+.horizon-crosshair.horizontal {
+  width: 100%; height: 1px; top: 50%;
+}
+.horizon-crosshair.vertical {
+  height: 100%; width: 1px; left: 50%;
+}
+.horizon-direction {
+  position: absolute;
+  font-size: 11px;
+  color: #e9c7e5;
+}
+.horizon-direction.north { top: 7px; left: 50%; transform: translateX(-50%); }
+.horizon-direction.east { right: 9px; top: 50%; transform: translateY(-50%); }
+.horizon-direction.south { bottom: 7px; left: 50%; transform: translateX(-50%); }
+.horizon-direction.west { left: 9px; top: 50%; transform: translateY(-50%); }
+.horizon-marker {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  box-shadow: 0 0 12px currentColor;
+}
+.horizon-marker.sun { background: #f6c76b; color: #f6c76b; }
+.horizon-marker.earth { background: #72c9ed; color: #72c9ed; }
+.horizon-center {
+  position: absolute;
+  width: 6px; height: 6px;
+  background: #fff;
+  border-radius: 50%;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+}
+.horizon-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 14px;
+  font-size: .85rem;
+}
+.horizon-legend span::before {
+  content: "";
+  display: inline-block;
+  width: 9px; height: 9px;
+  margin-right: 7px;
+  border-radius: 50%;
+}
+.horizon-legend .sun-key::before { background: #f6c76b; }
+.horizon-legend .earth-key::before { background: #72c9ed; }
+.horizon-readings {
+  display: grid;
+  gap: 12px;
+}
+.horizon-reading {
+  padding: 16px;
+  border: 1px solid rgba(218, 126, 205, .22);
+  border-radius: 13px;
+  background: rgba(255,255,255,.035);
+}
+.horizon-reading h3 { margin: 0 0 10px; }
+.horizon-reading p { margin: 5px 0; font-size: .92rem; }
+.horizon-reading strong { color: #f1c4e9; }
+.horizon-warning {
+  margin-top: 20px;
+  padding: 13px 15px;
+  border-left: 3px solid #e3b76c;
+  border-radius: 7px;
+  background: rgba(227, 183, 108, .09);
+  font-size: .87rem;
+  line-height: 1.55;
+}
+.horizon-status { margin-top: 12px; font-size: .85rem; color: #d9b7d6; }
+@media (max-width: 700px) {
+  .horizon-layout { grid-template-columns: 1fr; }
+  .horizon-panel { padding: 18px; }
+}
+
+
+/* LunaOps 24-hour Mission Environment Timeline */
+.mission-timeline {
+  margin: 28px 0;
+  padding: 28px;
+  border: 1px solid rgba(218,126,205,.28);
+  border-radius: 20px;
+  background: linear-gradient(145deg,rgba(37,25,49,.96),rgba(16,19,35,.98));
+}
+.mission-timeline h2 { margin: 8px 0; }
+.timeline-intro { max-width: 780px; line-height: 1.65; }
+.timeline-controls {
+  display: grid;
+  grid-template-columns: minmax(180px,1fr) auto;
+  gap: 14px;
+  align-items: end;
+  margin: 22px 0;
+}
+.timeline-controls label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: .9rem;
+}
+.timeline-controls input,
+.timeline-controls select {
+  width: 100%;
+  min-width: 0;
+  padding: 12px;
+  color: inherit;
+  color-scheme: dark;
+  background: rgba(12,14,28,.9);
+  border: 1px solid rgba(218,126,205,.35);
+  border-radius: 10px;
+}
+.timeline-button {
+  min-height: 43px;
+  padding: 10px 18px;
+  color: white;
+  background: linear-gradient(100deg,#a94e9e,#d17dbb);
+  border: 0;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.timeline-chart-card {
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid rgba(218,126,205,.2);
+  border-radius: 14px;
+  background: rgba(10,13,27,.55);
+}
+.timeline-chart-card h3 { margin: 0 0 8px; }
+.timeline-chart {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.timeline-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin: 12px 0 0;
+  font-size: .85rem;
+}
+.timeline-key::before {
+  content: "";
+  display: inline-block;
+  width: 18px;
+  height: 3px;
+  margin: 0 7px 3px 0;
+  border-radius: 4px;
+  background: var(--key-color);
+}
+.timeline-slider-wrap {
+  margin: 22px 0;
+  padding: 18px;
+  border: 1px solid rgba(218,126,205,.2);
+  border-radius: 14px;
+  background: rgba(10,13,27,.55);
+}
+.timeline-slider-wrap input { width: 100%; accent-color: #d17dbb; }
+.timeline-hour-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.timeline-readings {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(190px,1fr));
+  gap: 12px;
+}
+.timeline-reading {
+  padding: 15px;
+  border: 1px solid rgba(218,126,205,.2);
+  border-radius: 12px;
+  background: rgba(20,20,39,.7);
+}
+.timeline-reading h4 { margin: 0 0 9px; }
+.timeline-reading p { margin: 5px 0; font-size: .9rem; }
+.timeline-status { margin-top: 14px; line-height: 1.5; }
+.timeline-warning {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-left: 3px solid #d17dbb;
+  border-radius: 8px;
+  background: rgba(209,125,187,.08);
+  font-size: .88rem;
+  line-height: 1.6;
+}
+@media(max-width:600px) {
+  .mission-timeline { padding: 18px; }
+  .timeline-controls { grid-template-columns: 1fr; }
+}
+
+</style>
 </head>
 <body>
   <header>
-    <div class="brand">LUNA<span>OPS</span></div>
+    <div class="brand">LunaOps<span>ORBITAL</span></div>
     <div class="status">● MISSION WORKSPACE</div>
   </header>
 
   <main>
     <section class="hero">
       <div class="eyebrow">Lunar mission intelligence</div>
-      <h1>Explore the Moon.<br><span>Evaluate the unknown.</span></h1>
-      <p>
-        An educational workspace for exploring lunar south-pole candidate
-        regions, comparing terrain evidence, and understanding scientific
-        uncertainty.
-      </p>
-      <span class="tag">PROTOTYPE · DATA INTEGRATION IN PROGRESS</span>
-    </section>
+     <h1 class="hero-title">
+  Explore the Moon.<br>
+  <span>Evaluate the unknown.</span>
+</h1>
+<p>
+  Discover lunar terrain. Compare exploration regions.
+  Turn scientific data into clearer mission-planning insights.
+</p>
+
+<span class="tag">
+  LUNAR TERRAIN INTELLIGENCE · NASA LOLA DATA
+</span>
+<div class="section-head">
+  <h2>Mission overview</h2>
+  <span class="small">South-pole research workspace</span>
+</div>
+
+<section class="grid">
+  <article class="panel">
+    <div class="eyebrow">Study area</div>
+    <div class="metric">Lunar South Pole</div>
+    <p class="small">Region of interest for future exploration.</p>
+  </article>
+
+  <article class="panel">
+    <div class="eyebrow">Data source</div>
+    <div class="metric">NASA LOLA</div>
+    <p class="small">Lunar elevation and terrain products.</p>
+  </article>
+
+ <article class="panel">
+  <div class="eyebrow">Evidence status</div>
+  <div class="metric">Terrain data loaded</div>
+  <p class="small">
+    NASA LOLA elevation and slope datasets are available
+    for preliminary analysis of both candidate regions.
+  </p>
+</article>
+</section>
+
+<section class="dashboard-metrics">
+  <article class="metric-card">
+    <span>MEAN ELEVATION</span>
+    <h3><span id="meanElevation">—</span> <small>m</small></h3>
+    <div class="sparkline"></div>
+    <p>NASA LOLA · Selected site</p>
+  </article>
+
+  <article class="metric-card">
+    <span>ELEVATION RANGE</span>
+    <h3><span id="elevationRange">—</span> <small>m</small></h3>
+    <div class="sparkline"></div>
+    <p>Maximum − minimum</p>
+  </article>
+
+  <article class="metric-card">
+    <span>TERRAIN VARIABILITY</span>
+    <h3><span id="terrainVariability">—</span> <small>m</small></h3>
+    <div class="sparkline"></div>
+    <p>Elevation standard deviation</p>
+  </article>
+
+  <article class="metric-card">
+    <span>VALID DATA</span>
+    <h3><span id="validData">—</span> <small>%</small></h3>
+    <div class="sparkline"></div>
+    <p>Valid elevation pixels</p>
+  </article>
+
+  <article class="metric-card">
+    <span>STUDY AREAS</span>
+    <h3><span id="studyAreaCount">2</span></h3>
+    <div class="sparkline"></div>
+    <p>Available for comparison</p>
+  </article>
+</section>
 
     <div class="section-head">
-      <h2>Mission overview</h2>
-      <span class="small">South-pole research workspace</span>
+     <section class="terrain-map-panel">
+  <div class="terrain-map-header">
+    <div>
+      <span class="eyebrow">LUNAR INTELLIGENCE / TERRAIN ANALYSIS</span>
+      <h2>Lunar Surface Intelligence</h2>
+      <p>NASA LOLA elevation data · Comparative study workspace</p>
     </div>
 
-    <section class="grid">
-      <article class="panel">
-        <div class="eyebrow">Study area</div>
-        <div class="metric">Lunar South Pole</div>
-        <p class="small">Region of interest for future exploration.</p>
-      </article>
-      <article class="panel">
-        <div class="eyebrow">Data source</div>
-        <div class="metric">NASA LOLA</div>
-        <p class="small">Lunar elevation and terrain products.</p>
-      </article>
-      <article class="panel">
-        <div class="eyebrow">Evidence status</div>
-        <div class="metric" style="color:var(--amber)">In progress</div>
-        <p class="small">Verified terrain values have not yet been loaded.</p>
-      </article>
-    </section>
+    <select id="terrainSite" aria-label="Select terrain study area">
+      <option value="site01">Study Area 01</option>
+      <option value="site04">Study Area 04</option>
+    </select>
+  </div>
 
-    <div class="section-head">
+  <div class="terrain-map-layout">
+    <aside class="terrain-sidebar">
+      <span class="terrain-sidebar-title">STUDY AREAS</span>
+
+      <button type="button" class="terrain-site-button active"
+        data-site="site01">
+        <span>STUDY AREA 01</span>
+        <strong>LOLA · 5 m/pixel</strong>
+        <span class="terrain-site-bar"><i></i></span>
+      </button>
+
+      <button type="button" class="terrain-site-button"
+        data-site="site04">
+        <span>STUDY AREA 04</span>
+        <strong>LOLA · 5 m/pixel</strong>
+        <span class="terrain-site-bar"><i></i></span>
+      </button>
+
+      <div class="terrain-sidebar-note">
+        <span class="status-dot"></span>
+        NASA elevation data loaded
+      </div>
+    </aside>
+
+    <div class="terrain-map-main">
+      <div class="terrain-map-image">
+        <img
+          id="terrainImage"
+          src="data/site01_terrain.png"
+          alt="Elevation visualization generated from NASA LOLA terrain data"
+        />
+        <div class="terrain-map-overlay">
+          <span>LOLA DIGITAL ELEVATION MODEL</span>
+          <span id="terrainMapLabel">STUDY AREA 01</span>
+        </div>
+      </div>
+
+      <div class="terrain-map-footer">
+        <span>LOW ELEVATION</span>
+        <div class="elevation-gradient"></div>
+        <span>HIGH ELEVATION</span>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="analysis-chart-panel">
+  <div class="eyebrow">MISSION ANALYTICS</div>
+  <h2>Study Area Comparison</h2>
+  <p>NASA LOLA elevation statistics · meters</p>
+
+  <div class="comparison-chart">
+    <div class="chart-row">
+      <span>Study Area 01</span>
+      <div class="chart-track">
+        <div class="chart-bar site01-bar"></div>
+      </div>
+      <strong>1,139 m</strong>
+    </div>
+
+    <div class="chart-row">
+      <span>Study Area 04</span>
+      <div class="chart-track">
+        <div class="chart-bar site04-bar"></div>
+      </div>
+      <strong>245 m</strong>
+    </div>
+
+    <div class="chart-row">
+      <span>Area 01 variability</span>
+      <div class="chart-track">
+        <div class="chart-bar variability-site01"></div>
+      </div>
+      <strong>422 m</strong>
+    </div>
+
+    <div class="chart-row">
+      <span>Area 04 variability</span>
+      <div class="chart-track">
+        <div class="chart-bar variability-site04"></div>
+      </div>
+      <strong>1,246 m</strong>
+    </div>
+  </div>
+
+  <p class="science-note">
+    Mean elevation and elevation standard deviation from NASA LOLA data.
+    Elevation alone does not determine landing safety.
+  </p>
+</section>
       <h2>Candidate-site comparison</h2>
       <span class="small">Choose two study areas</span>
     </div>
@@ -249,12 +2882,509 @@
         <div class="eyebrow">Analysis tools</div>
         <h2>Compare regions</h2>
         <p>Review the selected study areas and their available evidence.</p>
-        <button id="compareBtn">Compare selected sites</button>
+        <button id="compareBtn">Compare Selected Sites</button>
         <div id="result" class="compare-result" aria-live="polite">
           Select the study areas and start a comparison.
         </div>
       </article>
     </section>
+
+    
+   <section class="analysis-chart-panel">
+  <div class="eyebrow">NASA TERRAIN ANALYTICS</div>
+  <h2>Slope Intelligence</h2>
+  <p>Comparing terrain steepness across two lunar study areas.</p>
+
+  <div class="comparison-chart">
+    <div class="chart-row">
+      <span>Area 01 mean slope</span>
+      <div class="chart-track">
+        <div class="chart-bar site01-slope-bar"></div>
+      </div>
+      <strong id="area01MeanSlope">12.598°</strong>
+    </div>
+
+    <div class="chart-row">
+      <span>Area 04 mean slope</span>
+      <div class="chart-track">
+        <div class="chart-bar site04-slope-bar"></div>
+      </div>
+      <strong id="area04MeanSlope">20.664°</strong>
+    </div>
+
+    <div class="chart-row">
+      <span>Area 01 median slope</span>
+      <div class="chart-track">
+        <div class="chart-bar site01-median-slope-bar"></div>
+      </div>
+      <strong id="area01MedianSlope">12.290°</strong>
+    </div>
+
+    <div class="chart-row">
+      <span>Area 04 median slope</span>
+      <div class="chart-track">
+        <div class="chart-bar site04-median-slope-bar"></div>
+      </div>
+      <strong id="area04MedianSlope">20.551°</strong>
+    </div>
+
+    <div class="chart-row">
+      <span>Area 01 at or below 5°</span>
+      <div class="chart-track">
+        <div class="chart-bar site01-five-slope-bar"></div>
+      </div>
+      <strong id="area01FiveSlope">9.77%</strong>
+    </div>
+
+    <div class="chart-row">
+      <span>Area 04 at or below 5°</span>
+      <div class="chart-track">
+        <div class="chart-bar site04-five-slope-bar"></div>
+      </div>
+      <strong id="area04FiveSlope">4.66%</strong>
+    </div>
+
+    <div class="chart-row">
+      <span>Area 01 at or below 10°</span>
+      <div class="chart-track">
+        <div class="chart-bar site01-low-slope-bar"></div>
+      </div>
+      <strong id="area01LowSlope">36.44%</strong>
+    </div>
+
+    <div class="chart-row">
+      <span>Area 04 at or below 10°</span>
+      <div class="chart-track">
+        <div class="chart-bar site04-low-slope-bar"></div>
+      </div>
+      <strong id="area04LowSlope">18.81%</strong>
+    </div>
+  </div>
+
+  <p class="science-note">
+    Source: NASA LOLA-derived 5 m/pixel slope datasets.
+    Lower slopes may be favorable for landing, but slope alone does not
+    establish landing safety or site suitability.
+  </p>
+</section>
+    <section class="analysis-chart-panel" id="slopeDistributionPanel">
+  <div class="eyebrow">NASA TERRAIN ANALYTICS</div>
+  <h2>Slope Distribution</h2>
+  <p>Percentage of each lunar study area within four slope ranges.</p>
+
+  <div class="distribution-site">
+    <h3>Site01 — Connecting Ridge</h3>
+    <div class="distribution-rows" id="site01Distribution"></div>
+  </div>
+
+  <div class="distribution-site">
+    <h3>Site04 — Shackleton Rim</h3>
+    <div class="distribution-rows" id="site04Distribution"></div>
+  </div>
+
+  <p class="science-note">
+    Slope ranges describe terrain steepness, not landing safety.
+    These percentages summarize each study area at the resolution
+    of the supplied NASA raster data.
+  </p>
+</section>
+<section class="analysis-chart-panel" id="terrainRiskPanel">
+  <div class="eyebrow">LUNAR TERRAIN INTELLIGENCE</div>
+  <h2>Terrain Risk Indicators</h2>
+  <p>Comparative measurements of terrain characteristics across both study areas.</p>
+
+  <div class="terrain-risk-grid">
+
+    <div class="risk-card">
+      <h3>Steep Terrain (&gt;15°)</h3>
+      <p>Percentage of terrain with slopes above 15 degrees.</p>
+      <div class="risk-values">
+        <span>Site01</span>
+        <strong id="site01SteepTerrain">Loading...</strong>
+      </div>
+      <div class="risk-values">
+        <span>Site04</span>
+        <strong id="site04SteepTerrain">Loading...</strong>
+      </div>
+    </div>
+
+    <div class="risk-card">
+      <h3>Elevation Variation</h3>
+      <p>Elevation standard deviation across each study area.</p>
+      <div class="risk-values">
+        <span>Site01</span>
+        <strong id="site01ElevationVariation">Loading...</strong>
+      </div>
+      <div class="risk-values">
+        <span>Site04</span>
+        <strong id="site04ElevationVariation">Loading...</strong>
+      </div>
+    </div>
+
+    <div class="risk-card">
+      <h3>Surface Roughness</h3>
+      <p>Preliminary regional roughness estimates at 1 km resolution.</p>
+      <div class="risk-values">
+        <span>Site01</span>
+        <strong id="site01Roughness">Loading...</strong>
+      </div>
+      <div class="risk-values">
+        <span>Site04</span>
+        <strong id="site04Roughness">Loading...</strong>
+      </div>
+      <p class="science-note">
+        Coordinate alignment is not conclusively verified. These estimates
+        must not be interpreted as landing-safety measurements.
+      </p>
+    </div>
+
+  </div>
+</section>
+<section class="analysis-chart-panel" id="lunarSlopeMaps">
+  <div class="eyebrow">NASA LUNAR VISUALIZATION</div>
+  <h2>Lunar Slope Maps</h2>
+  <p>
+    Explore terrain steepness across the two lunar study areas.
+    Both maps use the same color scale.
+  </p>
+
+  <div class="slope-map-controls">
+    <label for="slopeMapSite">Select study area</label>
+    <select id="slopeMapSite">
+      <option value="site01">Site 01 — Connecting Ridge</option>
+      <option value="site04">Site 04 — Shackleton Rim</option>
+    </select>
+  </div>
+
+  <div class="slope-map-frame">
+    <img
+      id="slopeMapImage"
+      src="data/site01_slope_map.png"
+      alt="NASA slope map for Site 01 — Connecting Ridge"
+    />
+  </div>
+
+  <div class="slope-map-legend">
+    <div class="slope-map-legend-heading">
+      <strong>Slope angle</strong>
+      <span>Degrees (°)</span>
+    </div>
+    <div class="slope-map-gradient"></div>
+    <div class="slope-map-legend-labels">
+      <span>0°</span>
+      <span>10°</span>
+      <span>20°</span>
+      <span>30°</span>
+      <span>40°+</span>
+    </div>
+  </div>
+
+  <p class="science-note">
+    Colors represent slope angle, not elevation. Areas above 40°
+    share the highest color on this map's scale. Slope alone
+    cannot establish landing safety.
+  </p>
+</section> 
+
+<section class="horizon-panel" id="horizonIntelligence">
+  <div class="eyebrow">LIVE NASA/JPL DATA · MISSION ENVIRONMENT</div>
+  <h2>Horizon Intelligence</h2>
+  <p class="horizon-panel-intro">
+    Explore the apparent direction and elevation of the Sun and Earth
+    from either lunar study location at a selected observation time.
+  </p>
+
+  <div class="horizon-controls">
+    <label for="horizonSite">
+      Study location
+      <select id="horizonSite">
+        <option value="site01">Site 01 — Connecting Ridge</option>
+        <option value="site04">Site 04 — Shackleton Rim</option>
+      </select>
+    </label>
+    <label for="horizonTime">
+      Observation date and time (your local time)
+      <input id="horizonTime" type="datetime-local">
+    </label>
+    <button class="horizon-button" id="horizonLoad" type="button">
+      Calculate positions
+    </button>
+  </div>
+
+  <div class="horizon-layout">
+    <div>
+      <div class="horizon-plot-wrap">
+        <div class="horizon-plot" id="horizonPlot"
+             role="img" aria-label="Circular directional plot of Sun and Earth positions">
+          <div class="horizon-ring ring-mid"></div>
+          <div class="horizon-ring ring-inner"></div>
+          <div class="horizon-crosshair horizontal"></div>
+          <div class="horizon-crosshair vertical"></div>
+          <span class="horizon-direction north">N</span>
+          <span class="horizon-direction east">E</span>
+          <span class="horizon-direction south">S</span>
+          <span class="horizon-direction west">W</span>
+          <div class="horizon-center"></div>
+          <div class="horizon-marker sun" id="horizonSunMarker"
+               style="left:50%;top:50%;display:none"></div>
+          <div class="horizon-marker earth" id="horizonEarthMarker"
+               style="left:50%;top:50%;display:none"></div>
+        </div>
+      </div>
+      <div class="horizon-legend">
+        <span class="sun-key">Sun</span>
+        <span class="earth-key">Earth</span>
+      </div>
+      <p class="science-note">
+        Direction is measured clockwise from north. The plot places objects
+        near the outer ring at the horizon and toward the centre at higher elevation.
+      </p>
+    </div>
+
+    <div class="horizon-readings">
+      <div class="horizon-reading">
+        <h3>☀ Sun position</h3>
+        <p>Azimuth: <strong id="horizonSunAz">Waiting...</strong></p>
+        <p>Elevation: <strong id="horizonSunEl">Waiting...</strong></p>
+      </div>
+      <div class="horizon-reading">
+        <h3>🌍 Earth position</h3>
+        <p>Azimuth: <strong id="horizonEarthAz">Waiting...</strong></p>
+        <p>Elevation: <strong id="horizonEarthEl">Waiting...</strong></p>
+      </div>
+      <p class="horizon-status" id="horizonStatus" aria-live="polite">
+        Select a location and calculate positions.
+      </p>
+    </div>
+  </div>
+
+  <div class="horizon-warning" id="horizonWarning">
+    Coordinate caution: the study-location coordinates are provisional.
+    Celestial positions are exploratory results, not validated site-specific
+    illumination forecasts or terrain-obstructed visibility predictions.
+  </div>
+</section>
+
+
+<section class="mission-timeline" id="missionTimeline">
+  <div class="eyebrow">NASA/JPL HORIZONS · CUSTOM OBSERVATION WINDOW</div>
+  <h2>Mission Environment Timeline</h2>
+  <p class="timeline-intro">
+    Compare the apparent elevation of the Sun and Earth over a configurable
+    Earth-time observation window at both lunar study locations. Choose a
+    start time, duration, and sampling interval to explore the observations.
+  </p>
+
+  <div class="timeline-controls">
+    <label for="timelineDate">
+      Observation date
+      <input id="timelineDate" type="date">
+    </label>
+
+    <label for="timelineStartTime">
+      Start time (your local time)
+      <input id="timelineStartTime" type="time" value="00:00">
+    </label>
+
+    <label for="timelineDuration">
+      Observation duration
+      <select id="timelineDuration">
+        <option value="6">6 hours</option>
+        <option value="12">12 hours</option>
+        <option value="24" selected>24 hours</option>
+        <option value="48">48 hours</option>
+        <option value="72">72 hours</option>
+      </select>
+    </label>
+
+    <label for="timelineInterval">
+      Sampling interval
+      <select id="timelineInterval">
+        <option value="15">15 minutes</option>
+        <option value="30">30 minutes</option>
+        <option value="60" selected>60 minutes</option>
+        <option value="120">120 minutes</option>
+      </select>
+    </label>
+
+    <button class="timeline-button" id="timelineLoad" type="button">
+      Load mission timeline
+    </button>
+  </div>
+
+  <div class="timeline-chart-card">
+    <h3>☀ Sun elevation</h3>
+    <p class="science-note">Apparent elevation above the observer's astronomical horizon.</p>
+    <svg class="timeline-chart" id="timelineSunChart"
+         viewBox="0 0 740 240" role="img"
+         aria-label="Sun elevation across the selected observation window">
+      <text x="370" y="120" text-anchor="middle" fill="#d9c5df">
+        Load observations to display chart
+      </text>
+    </svg>
+    <div class="timeline-legend">
+      <span class="timeline-key" style="--key-color:#e6a0d5">Site 01 — Connecting Ridge</span>
+      <span class="timeline-key" style="--key-color:#78c9ed">Site 04 — Shackleton Rim</span>
+    </div>
+  </div>
+
+  <div class="timeline-chart-card">
+    <h3>🌍 Earth elevation</h3>
+    <p class="science-note">Apparent elevation above the observer's astronomical horizon.</p>
+    <svg class="timeline-chart" id="timelineEarthChart"
+         viewBox="0 0 740 240" role="img"
+         aria-label="Earth elevation across the selected observation window">
+      <text x="370" y="120" text-anchor="middle" fill="#d9c5df">
+        Load observations to display chart
+      </text>
+    </svg>
+    <div class="timeline-legend">
+      <span class="timeline-key" style="--key-color:#e6a0d5">Site 01 — Connecting Ridge</span>
+      <span class="timeline-key" style="--key-color:#78c9ed">Site 04 — Shackleton Rim</span>
+    </div>
+  </div>
+
+  <div class="timeline-slider-wrap">
+    <div class="timeline-hour-label">
+      <strong>Selected observation</strong>
+      <strong id="timelineHour">Waiting for data</strong>
+    </div>
+    <input id="timelineSlider" type="range" min="0" max="24"
+           value="0" step="1" disabled
+           aria-label="Select observation sample">
+    <div class="timeline-hour-label">
+      <span>Start · 00:00</span>
+      <span>12:00</span>
+      <span>End · 24:00</span>
+    </div>
+  </div>
+
+  <div class="timeline-readings" id="timelineReadings">
+    <p>Load the timeline to inspect observation readings.</p>
+  </div>
+
+  <p class="timeline-status" id="timelineStatus" aria-live="polite">
+    Ready to request NASA/JPL observations.
+  </p>
+
+  <div class="timeline-warning" id="timelineWarning">
+    Scientific caution: study-location coordinates are provisional because
+    the original elevation raster CRS and projection parameters have not
+    been conclusively verified. These apparent celestial positions do not
+    account for local terrain obstruction, and they are not validated
+    illumination forecasts or landing-safety assessments. This is a
+    24-hour Earth-time window, not a complete lunar day.
+  </div>
+</section>
+
+<section class="analysis-chart-panel" id="terrainLimitations">
+  <div class="eyebrow">MISSION DECISION SUPPORT</div>
+  <h2>Terrain Risk & Limitations</h2>
+  <p>
+    What the current NASA terrain measurements reveal—and what
+    still needs to be investigated before assessing a landing site.
+  </p>
+
+  <div class="risk-grid">
+    <div class="risk-card">
+      <span class="risk-tag">MEASURED</span>
+      <h3>Terrain steepness</h3>
+      <p>
+        Slope statistics help identify how much terrain is relatively
+        gentle or steep within each study area.
+      </p>
+    </div>
+
+    <div class="risk-card">
+      <span class="risk-tag">MEASURED</span>
+      <h3>Elevation variation</h3>
+      <p>
+        Elevation statistics describe height differences and overall
+        variability across the selected region.
+      </p>
+    </div>
+
+    <div class="risk-card">
+      <span class="risk-tag pending">DATA NEEDED</span>
+      <h3>Surface hazards</h3>
+      <p>
+        Boulder distribution, crater hazards, and local surface
+        roughness need additional analysis.
+      </p>
+    </div>
+
+    <div class="risk-card">
+      <span class="risk-tag pending">DATA NEEDED</span>
+      <h3>Mission constraints</h3>
+      <p>
+        Lighting, communications, thermal conditions, and spacecraft
+        landing requirements are not assessed by these terrain metrics.
+      </p>
+    </div>
+  </div>
+
+  <p class="science-note">
+    <strong>Important:</strong> This dashboard provides preliminary
+    terrain evidence, not a certified landing-safety assessment.
+    A complete evaluation requires additional datasets and mission-specific criteria.
+  </p>
+</section>
+   <section class="analysis-chart-panel suitability-panel">
+  <div class="eyebrow">LUNAR SITE SCREENING</div>
+  <h2>Terrain Suitability Score</h2>
+
+  <p class="suitability-intro">
+    A preliminary comparison of terrain meeting the selected
+    slope threshold.
+  </p>
+
+  <div class="suitability-site">
+    <div class="suitability-site-header">
+      <div>
+        <span class="suitability-site-label">SITE 01</span>
+        <h3>Connecting Ridge</h3>
+      </div>
+      <div class="suitability-score">
+        <strong id="site01SuitabilityScore">36.44/100</strong>
+        <span>terrain meeting threshold</span>
+      </div>
+    </div>
+
+    <div class="suitability-track">
+      <div class="chart-bar site01-suitability-bar"></div>
+    </div>
+  </div>
+
+  <div class="suitability-site">
+    <div class="suitability-site-header">
+      <div>
+        <span class="suitability-site-label">SITE 04</span>
+        <h3>Shackleton Rim</h3>
+      </div>
+      <div class="suitability-score">
+        <strong id="site04SuitabilityScore">18.81/100</strong>
+        <span>terrain meeting threshold</span>
+      </div>
+    </div>
+
+    <div class="suitability-track">
+      <div class="chart-bar site04-suitability-bar"></div>
+    </div>
+  </div>
+
+  <div class="suitability-note">
+    <strong>How to read this score</strong>
+    <p>
+      The score represents the percentage of analyzed terrain
+      with slopes at or below 10°. It is not the probability
+      of a safe landing.
+    </p>
+    <p>
+      A complete assessment also needs to consider craters,
+      boulders, terrain roughness, lighting, and mission constraints.
+    </p>
+  </div>
+</section>
 
     <div class="section-head">
       <h2>Scientific data & limitations</h2>
@@ -278,43 +3408,2242 @@
           Lunar Reconnaissance Orbiter data products
         </a>
       </p>
-      <div class="notice">
-        Important: This initial version does not yet load or calculate
-        actual terrain measurements. The terrain artwork is illustrative.
-        A candidate region cannot be declared safe for landing from this
-        dashboard alone.
-      </div>
+    <div class="notice">
+  <strong>Scientific Scope & Limitations</strong><br><br>
+
+  LunaOps uses lunar elevation and slope datasets derived from
+  NASA LOLA data to support preliminary comparisons of selected
+  lunar south-polar regions.
+
+  Its visualizations and decision scores are analytical tools,
+  not landing-safety assessments or operational mission recommendations.
+
+  Regional roughness alignment remains under verification.
+  Additional investigation of illumination, thermal conditions,
+  boulder hazards, communications, and other mission constraints
+  is required.
+
+  LunaOps is an independent educational research project and
+  is not an official NASA application or NASA-endorsed system.
+</div>
     </section>
 
     <footer>
       LunaOps — Lunar Mission Intelligence · Independent educational prototype.
       Not an official NASA application.
     </footer>
-  </main>
+  
 
-  <script>
-    const siteA = document.getElementById("siteA");
-    const siteB = document.getElementById("siteB");
-    const result = document.getElementById("result");
 
-    document.getElementById("compareBtn").addEventListener("click", () => {
-      const a = siteA.value;
-      const b = siteB.value;
+</main>
 
-      if (a === b) {
-        result.textContent =
-          "Both selectors point to " + a +
-          ". Choose two different sites to compare them.";
-        return;
+ <script>
+  const siteA = document.getElementById("siteA");
+  const siteB = document.getElementById("siteB");
+  const result = document.getElementById("result");
+
+  document.getElementById("compareBtn").addEventListener("click", async () => {
+    const a = siteA.value;
+    const b = siteB.value;
+
+    if (a === b) {
+      result.textContent =
+        "Please choose two different study areas to compare.";
+      return;
+    }
+
+    result.textContent = "Loading NASA terrain statistics...";
+
+    try {
+      const [responseA, responseB] = await Promise.all([
+        fetch("data/" + a.toLowerCase() + "_stats.json"),
+        fetch("data/" + b.toLowerCase() + "_stats.json")
+      ]);
+
+      if (!responseA.ok || !responseB.ok) {
+        throw new Error("Could not load the statistics files.");
+      }
+const [statsA, statsB] = await Promise.all([
+  responseA.json(),
+  responseB.json()
+]);
+
+const slopeFiles = {
+  Site01: "data/site01_slope_stats.json",
+  Site04: "data/site04_slope_stats.json"
+};
+
+const [slopeAResponse, slopeBResponse] = await Promise.all([
+  fetch(slopeFiles[statsA.site]),
+  fetch(slopeFiles[statsB.site])
+]);
+
+if (!slopeAResponse.ok || !slopeBResponse.ok) {
+  throw new Error("Could not load slope statistics.");
+}
+
+const [slopeA, slopeB] = await Promise.all([
+  slopeAResponse.json(),
+  slopeBResponse.json()
+]);
+      const difference = statsA.mean_m - statsB.mean_m;
+const medianSlopeDifference =
+  slopeA.median_slope - slopeB.median_slope;
+
+const fiveDegreeDifference =
+  slopeA.pixels_at_or_below_5_degrees_percent -
+  slopeB.pixels_at_or_below_5_degrees_percent;
+
+const lowerMeanSlope =
+  slopeA.mean_slope < slopeB.mean_slope ? statsA.site : statsB.site;
+
+const greaterLowSlopeArea =
+  slopeA.pixels_at_or_below_10_degrees_percent >
+  slopeB.pixels_at_or_below_10_degrees_percent
+    ? statsA.site
+    : statsB.site;
+      result.innerHTML = `
+        <div class="comparison-heading">
+          <span class="eyebrow">NASA TERRAIN ANALYSIS</span>
+          <h3>Study Area Comparison</h3>
+          <p>Elevation evidence from two lunar regions</p>
+        </div>
+
+        <div class="terrain-cards">
+          ${[
+            ["Study Area A", statsA],
+            ["Study Area B", statsB]
+          ].map(([label, stats]) => `
+            <div class="terrain-card">
+              <span class="terrain-label">${label}</span>
+              <h3>${stats.site}</h3>
+
+              <div class="terrain-metric">
+                <span>Mean elevation</span>
+                <strong>${stats.mean_m.toFixed(2)} <small>m</small></strong>
+              </div>
+
+              <div class="terrain-detail">
+                <span>Minimum</span>
+                <strong>${stats.minimum_m.toFixed(2)} m</strong>
+              </div>
+
+              <div class="terrain-detail">
+                <span>Maximum</span>
+                <strong>${stats.maximum_m.toFixed(2)} m</strong>
+              </div>
+
+              <div class="terrain-detail">
+                <span>Elevation variability (SD)</span>
+                <strong>${stats.standard_deviation_m.toFixed(2)} m</strong>
+              </div>
+
+              <div class="terrain-source">
+                ${stats.source} · ${stats.pixel_size_m.join(" × ")} m pixels
+              </div>
+            </div>
+          `).join("")}
+        </div>
+
+        <div class="difference-card">
+          <span>Difference in mean elevation (A − B)</span>
+          <strong>${difference.toFixed(2)} m</strong>
+          <p>This measures elevation difference only, not landing safety.</p>
+        </div>
+        <div class="difference-card">
+          <span>Difference in mean slope (A − B)</span>
+         <strong>${(slopeA.mean_slope - slopeB.mean_slope).toFixed(2)}°</strong>
+          <p>Compares average terrain steepness between the selected sites.</p>
+        </div>
+
+        <div class="difference-card">
+          <span>Low-slope terrain (≤10°)</span>
+         <strong>${slopeA.pixels_at_or_below_10_degrees_percent.toFixed(2)}% vs ${slopeB.pixels_at_or_below_10_degrees_percent.toFixed(2)}%</strong>
+          <p>Percentage of each study area with slope at or below 10°.</p>
+        </div>
+        <div class="difference-card">
+  <span>Difference in median slope (A − B)</span>
+  <strong>${medianSlopeDifference.toFixed(2)}°</strong>
+  <p>Compares the median terrain steepness of both study areas.</p>
+</div>
+
+<div class="difference-card">
+  <span>Very low-slope terrain (≤5°)</span>
+  <strong>${slopeA.pixels_at_or_below_5_degrees_percent.toFixed(2)}% vs ${slopeB.pixels_at_or_below_5_degrees_percent.toFixed(2)}%</strong>
+  <p>Percentage of each study area with slope at or below 5°.</p>
+</div>
+
+<div class="difference-card">
+  <span>Comparison summary</span>
+  <p><strong>${lowerMeanSlope}</strong> has the lower mean slope.</p>
+  <p><strong>${greaterLowSlopeArea}</strong> has the greater percentage of terrain at or below 10°.</p>
+  <p>Difference in terrain at or below 5° (A − B): <strong>${fiveDegreeDifference.toFixed(2)} percentage points</strong>.</p>
+</div>
+        <p class="science-note">
+          <strong>Scientific note:</strong>
+         Elevation statistics alone cannot establish landing safety.
+          Further slope, surface roughness, and hazard analysis is required.
+        </p>
+      `;
+    } catch (error) {
+      result.textContent =
+        "Could not load the NASA statistics files. Check that both JSON files exist in the data folder.";
+      console.error(error);
+    }
+  });
+  // Switch between NASA-derived terrain images
+const terrainSite = document.getElementById("terrainSite");
+const terrainImage = document.getElementById("terrainImage");
+
+function syncTerrainSelection() {
+  const selectedSite = terrainSite.value;
+
+  terrainImage.src = `data/${selectedSite}_terrain.png`;
+  terrainImage.alt =
+    `NASA LOLA elevation visualization for ${selectedSite}`;
+
+  document.getElementById("terrainMapLabel").textContent =
+    selectedSite === "site01" ? "STUDY AREA 01" : "STUDY AREA 04";
+
+  document.querySelectorAll(".terrain-site-button").forEach((button) => {
+    const isActive = button.dataset.site === selectedSite;
+
+    button.classList.toggle("active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+}
+
+terrainSite.addEventListener("change", syncTerrainSelection);
+
+document.querySelectorAll(".terrain-site-button").forEach((button) => {
+  button.addEventListener("click", () => {
+    terrainSite.value = button.dataset.site;
+    syncTerrainSelection();
+    updateDashboardMetrics(terrainSite.value);
+  });
+});
+
+syncTerrainSelection();
+// Update dashboard cards using NASA terrain statistics
+async function updateDashboardMetrics(site) {
+  try {
+    const response = await fetch(`data/${site}_stats.json`);
+
+    if (!response.ok) {
+      throw new Error("Could not load terrain statistics.");
+    }
+
+    const stats = await response.json();
+
+    const totalPixels = stats.width * stats.height;
+    const validPercentage = totalPixels
+      ? (stats.valid_pixels / totalPixels) * 100
+      : 0;
+
+    document.getElementById("meanElevation").textContent =
+      stats.mean_m.toFixed(1);
+
+    document.getElementById("elevationRange").textContent =
+      (stats.maximum_m - stats.minimum_m).toFixed(1);
+
+    document.getElementById("terrainVariability").textContent =
+      stats.standard_deviation_m.toFixed(1);
+
+    document.getElementById("validData").textContent =
+      validPercentage.toFixed(1);
+
+    document.getElementById("studyAreaCount").textContent = "2";
+
+  } catch (error) {
+    console.error("Dashboard update failed:", error);
+  }
+}
+
+// Load the initial study area's statistics
+updateDashboardMetrics(terrainSite.value);
+
+// Update the cards when the study area changes
+terrainSite.addEventListener("change", () => {
+  updateDashboardMetrics(terrainSite.value);
+});
+async function loadSlopeIntelligence() {
+  try {
+    const [response01, response04] = await Promise.all([
+      fetch("data/site01_slope_stats.json"),
+      fetch("data/site04_slope_stats.json")
+    ]);
+
+    if (!response01.ok || !response04.ok) {
+      throw new Error("Could not load slope statistics.");
+    }
+
+    const [site01, site04] = await Promise.all([
+      response01.json(),
+      response04.json()
+    ]);
+
+    // Update the displayed values
+    document.getElementById("area01MeanSlope").textContent =
+      `${site01.mean_slope.toFixed(3)}°`;
+
+    document.getElementById("area04MeanSlope").textContent =
+      `${site04.mean_slope.toFixed(3)}°`;
+
+    document.getElementById("area01LowSlope").textContent =
+      `${site01.pixels_at_or_below_10_degrees_percent.toFixed(2)}%`;
+
+    document.getElementById("area04LowSlope").textContent =
+      `${site04.pixels_at_or_below_10_degrees_percent.toFixed(2)}%`;
+// Display median slope statistics
+document.getElementById("area01MedianSlope").textContent =
+  `${site01.median_slope.toFixed(3)}°`;
+
+document.getElementById("area04MedianSlope").textContent =
+  `${site04.median_slope.toFixed(3)}°`;
+
+// Display the percentage of terrain at or below 5 degrees
+const five01 = site01.pixels_at_or_below_5_degrees_percent;
+const five04 = site04.pixels_at_or_below_5_degrees_percent;
+
+document.getElementById("area01FiveSlope").textContent =
+  `${five01.toFixed(2)}%`;
+
+document.getElementById("area04FiveSlope").textContent =
+  `${five04.toFixed(2)}%`;
+
+// Scale the median-slope bars against the larger median
+const maxMedian = Math.max(site01.median_slope, site04.median_slope);
+
+document.querySelector(".site01-median-slope-bar").style.width =
+  `${(site01.median_slope / maxMedian) * 100}%`;
+
+document.querySelector(".site04-median-slope-bar").style.width =
+  `${(site04.median_slope / maxMedian) * 100}%`;
+
+// Scale the <=5-degree bars against the larger percentage
+const maxFive = Math.max(five01, five04);
+
+document.querySelector(".site01-five-slope-bar").style.width =
+  `${(five01 / maxFive) * 100}%`;
+
+document.querySelector(".site04-five-slope-bar").style.width =
+  `${(five04 / maxFive) * 100}%`;
+    // Scale the mean-slope bars relative to the larger mean
+    const maxMean = Math.max(site01.mean_slope, site04.mean_slope);
+
+    document.querySelector(".site01-slope-bar").style.width =
+      `${(site01.mean_slope / maxMean) * 100}%`;
+
+    document.querySelector(".site04-slope-bar").style.width =
+      `${(site04.mean_slope / maxMean) * 100}%`;
+
+    // Scale the low-slope bars relative to the larger percentage
+    const low01 = site01.pixels_at_or_below_10_degrees_percent;
+    const low04 = site04.pixels_at_or_below_10_degrees_percent;
+    const maxLow = Math.max(low01, low04);
+
+    document.querySelector(".site01-low-slope-bar").style.width =
+      `${(low01 / maxLow) * 100}%`;
+
+    document.querySelector(".site04-low-slope-bar").style.width =
+      `${(low04 / maxLow) * 100}%`;
+      // Update preliminary terrain suitability scores
+document.getElementById("site01SuitabilityScore").textContent =
+  `${low01.toFixed(2)}/100`;
+
+document.getElementById("site04SuitabilityScore").textContent =
+  `${low04.toFixed(2)}/100`;
+
+// Update suitability bars
+document.querySelector(".site01-suitability-bar").style.width =
+  `${low01}%`;
+
+document.querySelector(".site04-suitability-bar").style.width =
+  `${low04}%`;
+
+  } catch (error) {
+    console.error("Slope Intelligence could not load:", error);
+  }
+}
+
+loadSlopeIntelligence();
+async function loadSlopeDistribution() {
+  const ranges = [
+    { key: "0_to_5_degrees_percent", label: "0–5°", color: "#34d399" },
+    { key: "above_5_to_10_degrees_percent", label: ">5–10°", color: "#60a5fa" },
+    { key: "above_10_to_15_degrees_percent", label: ">10–15°", color: "#a78bfa" },
+    { key: "above_15_degrees_percent", label: ">15°", color: "#f59e0b" }
+  ];
+
+  try {
+    const [response01, response04] = await Promise.all([
+      fetch("data/site01_slope_stats.json"),
+      fetch("data/site04_slope_stats.json")
+    ]);
+
+    if (!response01.ok || !response04.ok) {
+      throw new Error("Could not load slope distribution data.");
+    }
+
+    const [site01, site04] = await Promise.all([
+      response01.json(),
+      response04.json()
+    ]);
+
+  function renderDistribution(containerId, stats) {
+  const container = document.getElementById(containerId);
+  container.replaceChildren();
+
+  ranges.forEach(range => {
+    const value = stats.slope_distribution[range.key];
+
+    const row = document.createElement("div");
+    row.className = "distribution-row";
+
+    const label = document.createElement("span");
+    label.className = "distribution-label";
+    label.textContent = range.label;
+
+    const track = document.createElement("div");
+    track.className = "distribution-track";
+
+    const bar = document.createElement("div");
+    bar.className = "distribution-bar";
+    bar.style.width = `${value}%`;
+    bar.style.background = range.color;
+
+    const number = document.createElement("strong");
+    number.className = "distribution-value";
+    number.textContent = `${value.toFixed(2)}%`;
+
+    track.appendChild(bar);
+    row.append(label, track, number);
+    container.appendChild(row);
+  });
+}
+
+    renderDistribution("site01Distribution", site01);
+    renderDistribution("site04Distribution", site04);
+
+  } catch (error) {
+    console.error("Slope Distribution could not load:", error);
+  }
+}
+
+loadSlopeDistribution();
+// Load terrain risk indicators
+async function loadTerrainRiskIndicators() {
+  try {
+    const [slope01Response, slope04Response, elevation01Response, elevation04Response, roughnessResponse] =
+      await Promise.all([
+        fetch("data/site01_slope_stats.json"),
+        fetch("data/site04_slope_stats.json"),
+        fetch("data/site01_stats.json"),
+        fetch("data/site04_stats.json"),
+        fetch("data/roughness_stats.json")
+      ]);
+
+    if (
+      !slope01Response.ok ||
+      !slope04Response.ok ||
+      !elevation01Response.ok ||
+      !elevation04Response.ok ||
+      !roughnessResponse.ok
+    ) {
+      throw new Error("Could not load terrain risk data.");
+    }
+
+    const [slope01, slope04, elevation01, elevation04, roughness] =
+      await Promise.all([
+        slope01Response.json(),
+        slope04Response.json(),
+        elevation01Response.json(),
+        elevation04Response.json(),
+        roughnessResponse.json()
+      ]);
+
+    // Display percentage of terrain above 15 degrees
+    document.getElementById("site01SteepTerrain").textContent =
+      `${slope01.slope_distribution.above_15_degrees_percent.toFixed(2)}%`;
+
+    document.getElementById("site04SteepTerrain").textContent =
+      `${slope04.slope_distribution.above_15_degrees_percent.toFixed(2)}%`;
+
+    // Display elevation variation
+    document.getElementById("site01ElevationVariation").textContent =
+      `${elevation01.standard_deviation_m.toFixed(2)} m`;
+
+    document.getElementById("site04ElevationVariation").textContent =
+      `${elevation04.standard_deviation_m.toFixed(2)} m`;
+
+    // Display preliminary surface roughness
+    document.getElementById("site01Roughness").textContent =
+      `${roughness.site01.mean_m.toFixed(3)} m`;
+
+    document.getElementById("site04Roughness").textContent =
+      `${roughness.site04.mean_m.toFixed(3)} m`;
+
+  } catch (error) {
+    console.error("Terrain Risk Indicators could not load:", error);
+  }
+}
+
+loadTerrainRiskIndicators();
+// LUNAOPS — MISSION SITE DECISION ENGINE
+
+async function loadMissionDecisionEngine() {
+  try {
+    const files = [
+      "data/site01_stats.json",
+      "data/site04_stats.json",
+      "data/site01_slope_stats.json",
+      "data/site04_slope_stats.json"
+    ];
+
+    const responses = await Promise.all(files.map(file => fetch(file)));
+
+    if (responses.some(response => !response.ok)) {
+      throw new Error("Could not load decision engine data.");
+    }
+
+    const [elevation01, elevation04, slope01, slope04] =
+      await Promise.all(responses.map(response => response.json()));
+
+    const sites = [
+      {
+        name: "Site01 — Connecting Ridge",
+        meanSlope: slope01.mean_slope,
+        low10: slope01.pixels_at_or_below_10_degrees_percent,
+        low5: slope01.pixels_at_or_below_5_degrees_percent,
+        elevationVariation: elevation01.standard_deviation_m
+      },
+      {
+        name: "Site04 — Shackleton Rim",
+        meanSlope: slope04.mean_slope,
+        low10: slope04.pixels_at_or_below_10_degrees_percent,
+        low5: slope04.pixels_at_or_below_5_degrees_percent,
+        elevationVariation: elevation04.standard_deviation_m
+      }
+    ];
+
+    const criteria = [
+      { key: "meanSlope", weight: 30, lowerIsBetter: true },
+      { key: "low10", weight: 30, lowerIsBetter: false },
+      { key: "low5", weight: 20, lowerIsBetter: false },
+      { key: "elevationVariation", weight: 20, lowerIsBetter: true }
+    ];
+
+   // Calculate relative performance scores for each criterion
+criteria.forEach(criterion => {
+  const values = sites.map(site => site[criterion.key]);
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+
+  sites.forEach(site => {
+    const value = site[criterion.key];
+    let score = 100;
+
+    if (max !== min) {
+      score = criterion.lowerIsBetter
+        ? (min / value) * 100
+        : (value / max) * 100;
+    }
+
+    site[criterion.key + "Score"] = score;
+  });
+});
+
+// Calculate weighted overall comparison scores
+sites.forEach(site => {
+  site.totalScore = criteria.reduce((total, criterion) => {
+    return total +
+      site[criterion.key + "Score"] * criterion.weight / 100;
+  }, 0);
+});
+
+    const winner = sites[0].totalScore >= sites[1].totalScore
+      ? sites[0]
+      : sites[1];
+
+    const section = document.createElement("section");
+    section.id = "missionDecisionEngine";
+    section.className = "analysis-chart-panel";
+
+    section.innerHTML = `
+      <div class="eyebrow">LUNAR MISSION INTELLIGENCE</div>
+      <h2>Mission Site Decision Engine</h2>
+      <p>Relative comparison scores based on four weighted terrain measurements.</p>
+
+      <div class="decision-score-grid">
+        ${sites.map(site => `
+          <div class="decision-score-card">
+            <span>${site.name}</span>
+            <strong>${site.totalScore.toFixed(1)}<small>/100</small></strong>
+            <div class="decision-score-track">
+              <div class="decision-score-fill"
+                   style="width:${site.totalScore}%"></div>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+
+      <div class="decision-result">
+        <span class="eyebrow">RELATIVE COMPARISON RESULT</span>
+        <h3>${winner.name}</h3>
+        <p>Scores higher under the currently selected terrain criteria.</p>
+      </div>
+
+      <h3>Weighted Criteria Breakdown</h3>
+
+     <div class="decision-breakdown">
+  ${criteria.map(criterion => {
+    const measurements = {
+      meanSlope:
+        `${sites[0].meanSlope.toFixed(3)}° vs ${sites[1].meanSlope.toFixed(3)}°`,
+      low10:
+        `${sites[0].low10.toFixed(2)}% vs ${sites[1].low10.toFixed(2)}%`,
+      low5:
+        `${sites[0].low5.toFixed(2)}% vs ${sites[1].low5.toFixed(2)}%`,
+      elevationVariation:
+        `${sites[0].elevationVariation.toFixed(2)} m vs ${sites[1].elevationVariation.toFixed(2)} m`
+    };
+
+    const labels = {
+      meanSlope: "Mean slope (30%)",
+      low10: "Terrain ≤10° (30%)",
+      low5: "Terrain ≤5° (20%)",
+      elevationVariation: "Elevation variation (20%)"
+    };
+
+    return `
+      <div class="decision-row">
+        <span>${labels[criterion.key]}</span>
+
+     <small class="decision-measurements">
+  Site01: ${measurements[criterion.key].split(" vs ")[0]}
+  <span> | </span>
+  Site04: ${measurements[criterion.key].split(" vs ")[1]}
+</small>
+
+        <strong>
+          ${sites[0][criterion.key + "Score"].toFixed(1)}
+          vs
+          ${sites[1][criterion.key + "Score"].toFixed(1)}
+        </strong>
+      </div>
+    `;
+  }).join("")}
+</div>
+      <p class="science-note">
+        Scores are relative to these two study areas and depend on the
+        proposed weights. They are not probabilities, official NASA
+        ratings, or landing-safety assessments. Other factors, including
+        hazards, illumination, communications and surface roughness,
+        require further investigation.
+      </p>
+    `;
+
+    const riskPanel = document.getElementById("terrainRiskPanel");
+    riskPanel.insertAdjacentElement("afterend", section);
+// LUNAOPS — DECISION ENGINE METHODOLOGY
+
+const methodology = document.createElement("section");
+
+methodology.id = "decisionMethodology";
+methodology.className = "analysis-chart-panel";
+
+methodology.innerHTML = `
+  <div class="eyebrow">ANALYTICAL FRAMEWORK</div>
+
+  <h2>Decision Engine Methodology</h2>
+
+  <p>
+    Understanding how lunar terrain measurements are converted
+    into comparative mission-site performance scores.
+  </p>
+
+  <div class="methodology-intro">
+    <h3>01 — Purpose of the Model</h3>
+    <p>
+      The Decision Engine compares two lunar study areas using
+      selected terrain measurements. It combines these measurements
+      into a weighted relative performance index to support
+      preliminary site investigation.
+    </p>
+  </div>
+
+  <h3>02 — Selection Criteria and Weights</h3>
+
+  <div class="methodology-grid">
+
+    <article class="method-card">
+      <span class="method-weight">30%</span>
+      <h4>Mean Slope</h4>
+      <p>
+        Measures the average steepness of the terrain.
+        Lower mean slopes are preferred in this preliminary
+        comparison because steep terrain can complicate
+        landing and surface operations.
+      </p>
+    </article>
+
+    <article class="method-card">
+      <span class="method-weight">30%</span>
+      <h4>Terrain at or Below 10°</h4>
+      <p>
+        Measures the percentage of terrain with slopes
+        of 10 degrees or less. A larger percentage indicates
+        more relatively gentle terrain within the study area.
+      </p>
+    </article>
+
+    <article class="method-card">
+      <span class="method-weight">20%</span>
+      <h4>Terrain at or Below 5°</h4>
+      <p>
+        Identifies the percentage of especially low-slope
+        terrain. This provides an additional measure of
+        relatively gentle surface conditions.
+      </p>
+    </article>
+
+    <article class="method-card">
+      <span class="method-weight">20%</span>
+      <h4>Elevation Variation</h4>
+      <p>
+        Uses elevation standard deviation to measure how
+        much elevation varies across the study area.
+        Lower variation receives a higher relative score.
+      </p>
+    </article>
+
+  </div>
+
+  <div class="methodology-block">
+    <h3>03 — Weighting Rationale</h3>
+    <p>
+      The model assigns 60% of its total weight to slope-related
+      measurements because terrain steepness is a central
+      consideration in preliminary landing-area analysis.
+      The remaining 40% is assigned to elevation variation.
+    </p>
+    <p>
+      These weights are proposed design choices for this
+      prototype. They are not official NASA weightings or
+      validated engineering standards.
+    </p>
+  </div>
+
+  <div class="methodology-block">
+    <h3>04 — Relative Scoring Method</h3>
+    <p>
+      Each criterion is converted into a relative score
+      between 0 and 100 using the two selected study areas.
+    </p>
+
+    <div class="method-formula">
+      <strong>For lower-is-better measurements:</strong>
+      <p>Score = (Lower value / Site value) × 100</p>
+    </div>
+
+    <div class="method-formula">
+      <strong>For higher-is-better measurements:</strong>
+      <p>Score = (Site value / Higher value) × 100</p>
+    </div>
+
+    <p>
+      Each criterion score is multiplied by its assigned
+      weight. The weighted contributions are then added
+      to calculate the overall comparison score.
+    </p>
+  </div>
+
+  <div class="methodology-block">
+    <h3>05 — Model Limitations and Future Work</h3>
+    <p>
+      The resulting scores are relative to the two study
+      areas and the selected criteria. They do not represent
+      landing probabilities or certify either location as safe.
+    </p>
+
+    <p>Further investigation should include:</p>
+
+    <ul>
+      <li>Detailed surface hazard and boulder mapping</li>
+      <li>Higher-resolution surface roughness measurements</li>
+      <li>Landing-site illumination and thermal conditions</li>
+      <li>Communications and mission accessibility</li>
+      <li>Additional geological and topographical analysis</li>
+    </ul>
+
+    <p>
+      Future versions of LunaOps can incorporate these
+      additional datasets to develop a more comprehensive
+      lunar mission assessment framework.
+    </p>
+  </div>
+
+  <div class="methodology-footer">
+    LunaOps · PRELIMINARY LUNAR TERRAIN ANALYSIS
+  </div>
+`;
+
+section.insertAdjacentElement("afterend", methodology);
+// LUNAOPS — DECISION ENGINE TRANSPARENCY
+
+const transparency = document.createElement("section");
+
+transparency.id = "decisionTransparency";
+transparency.className = "analysis-chart-panel";
+
+transparency.innerHTML = `
+  <div class="eyebrow">MODEL TRANSPARENCY</div>
+
+  <h2>Decision Engine Transparency</h2>
+
+  <p>
+    Explore how each terrain criterion contributes to the
+    overall relative performance score.
+  </p>
+
+  <h3>01 — Criterion Weight Distribution</h3>
+
+  <div class="weight-distribution">
+    ${criteria.map(criterion => {
+      const labels = {
+        meanSlope: "Mean slope",
+        low10: "Terrain ≤10°",
+        low5: "Terrain ≤5°",
+        elevationVariation: "Elevation variation"
+      };
+
+      return `
+        <div class="weight-item">
+          <div class="weight-heading">
+            <span>${labels[criterion.key]}</span>
+            <strong>${criterion.weight}%</strong>
+          </div>
+
+          <div class="weight-track">
+            <div class="weight-fill"
+                 style="width:${criterion.weight}%">
+            </div>
+          </div>
+        </div>
+      `;
+    }).join("")}
+  </div>
+
+  <h3>02 — Individual Score Contributions</h3>
+
+  <p>
+    Each criterion contributes a weighted number of points
+    to the overall score.
+  </p>
+
+  <div class="contribution-grid">
+    ${sites.map(site => `
+      <article class="contribution-card">
+        <h4>${site.name}</h4>
+
+        ${criteria.map(criterion => {
+          const contribution =
+            site[criterion.key + "Score"] *
+            criterion.weight / 100;
+
+          const labels = {
+            meanSlope: "Mean slope",
+            low10: "Terrain ≤10°",
+            low5: "Terrain ≤5°",
+            elevationVariation: "Elevation variation"
+          };
+
+          return `
+            <div class="contribution-row">
+              <div>
+                <span>${labels[criterion.key]}</span>
+                <strong>${contribution.toFixed(2)} points</strong>
+              </div>
+
+              <div class="contribution-track">
+                <div class="contribution-fill"
+                     style="width:${contribution}%">
+                </div>
+              </div>
+            </div>
+          `;
+        }).join("")}
+
+        <div class="contribution-total">
+          <span>Total weighted score</span>
+          <strong>${site.totalScore.toFixed(2)} / 100</strong>
+        </div>
+      </article>
+    `).join("")}
+  </div>
+
+  <h3>03 — Data and Model Assumptions</h3>
+
+  <div class="transparency-info-grid">
+
+    <article class="transparency-info">
+      <span class="info-label">MEASURED DATA</span>
+      <h4>Dataset-derived measurements</h4>
+      <p>
+        Mean slope, low-slope terrain percentages and
+        elevation variation are calculated from the
+        available study-area datasets.
+      </p>
+    </article>
+
+    <article class="transparency-info">
+      <span class="info-label">MODEL ASSUMPTIONS</span>
+      <h4>Research design choices</h4>
+      <p>
+        Criterion weights, scoring directions and the
+        relative scoring method are choices made for
+        this prototype. They are not official NASA ratings.
+      </p>
+    </article>
+
+  </div>
+
+  <div class="transparency-note">
+    <strong>Important interpretation:</strong>
+    Weighted contributions explain how the model produces
+    its comparison scores. They do not represent probabilities,
+    percentages of landing safety or absolute site suitability.
+  </div>
+`;
+
+methodology.insertAdjacentElement("afterend", transparency);
+// LUNAOPS — WEIGHT SENSITIVITY ANALYSIS
+
+const sensitivity = document.createElement("section");
+
+sensitivity.id = "sensitivityAnalysis";
+sensitivity.className = "analysis-chart-panel";
+
+const equalWeightScores = sites.map(site => {
+  return criteria.reduce((total, criterion) => {
+    return total + site[criterion.key + "Score"] * 0.25;
+  }, 0);
+});
+
+const equalWeightWinner =
+  equalWeightScores[0] >= equalWeightScores[1]
+    ? sites[0].name
+    : sites[1].name;
+
+const rankingStable =
+  equalWeightWinner === winner.name;
+
+sensitivity.innerHTML = `
+  <div class="eyebrow">MODEL ROBUSTNESS</div>
+
+  <h2>Weight Sensitivity Analysis</h2>
+
+  <p>
+    Testing whether the site comparison changes when the
+    importance assigned to each terrain criterion changes.
+  </p>
+
+  <div class="sensitivity-scenario">
+    <div class="scenario-label">SCENARIO 01</div>
+    <h3>Current Weighted Model</h3>
+    <p>Uses the proposed 30 / 30 / 20 / 20 weighting.</p>
+
+    <div class="sensitivity-scores">
+      <div>
+        <span>Site01</span>
+        <strong>${sites[0].totalScore.toFixed(2)}</strong>
+      </div>
+      <div>
+        <span>Site04</span>
+        <strong>${sites[1].totalScore.toFixed(2)}</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="sensitivity-scenario">
+    <div class="scenario-label">SCENARIO 02</div>
+    <h3>Equal Weight Model</h3>
+    <p>Assigns 25% weight to each of the four criteria.</p>
+
+    <div class="sensitivity-scores">
+      <div>
+        <span>Site01</span>
+        <strong>${equalWeightScores[0].toFixed(2)}</strong>
+      </div>
+      <div>
+        <span>Site04</span>
+        <strong>${equalWeightScores[1].toFixed(2)}</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="sensitivity-conclusion">
+    <span class="eyebrow">RANKING STABILITY</span>
+
+    <h3>${rankingStable
+      ? "The leading site remains unchanged"
+      : "The leading site changes"
+    }</h3>
+
+    <p>
+      Under equal weighting, ${equalWeightWinner} scores higher.
+      ${
+        rankingStable
+          ? "The same site leads under both tested weighting scenarios."
+          : "The leading site differs between the two tested weighting scenarios."
+      }
+    </p>
+  </div>
+
+  <p class="science-note">
+    This is a preliminary two-scenario sensitivity test,
+    not a complete uncertainty analysis. Both scenarios use
+    the same underlying terrain measurements and relative
+    scoring formulas. Further testing with additional
+    weighting combinations is needed.
+  </p>
+`;
+
+transparency.insertAdjacentElement("afterend", sensitivity);
+
+// LUNAOPS — INTERACTIVE MISSION WEIGHT SIMULATOR
+
+const weightSimulator = document.createElement("section");
+
+weightSimulator.id = "weightSimulator";
+weightSimulator.className = "analysis-chart-panel";
+
+weightSimulator.innerHTML = `
+  <div class="eyebrow">INTERACTIVE MODEL LAB</div>
+
+  <h2>Mission Weight Simulator</h2>
+
+  <p>
+    Adjust the importance of each terrain criterion to explore
+    how different weighting choices affect the comparison.
+  </p>
+
+  <div class="simulator-controls">
+
+    <div class="simulator-control">
+      <label for="weightMeanSlope">
+        Mean Slope <strong id="weightMeanSlopeValue">30%</strong>
+      </label>
+      <input type="range" id="weightMeanSlope"
+             min="0" max="100" value="30">
+    </div>
+
+    <div class="simulator-control">
+      <label for="weightLow10">
+        Terrain ≤10° <strong id="weightLow10Value">30%</strong>
+      </label>
+      <input type="range" id="weightLow10"
+             min="0" max="100" value="30">
+    </div>
+
+    <div class="simulator-control">
+      <label for="weightLow5">
+        Terrain ≤5° <strong id="weightLow5Value">20%</strong>
+      </label>
+      <input type="range" id="weightLow5"
+             min="0" max="100" value="20">
+    </div>
+
+    <div class="simulator-control">
+      <label for="weightElevation">
+        Elevation Variation
+        <strong id="weightElevationValue">20%</strong>
+      </label>
+      <input type="range" id="weightElevation"
+             min="0" max="100" value="20">
+    </div>
+
+  </div>
+
+  <div class="weight-total">
+    <span>Total selected weight</span>
+    <strong id="simulatorWeightTotal">100%</strong>
+  </div>
+
+  <div id="simulatorWarning" class="simulator-warning" hidden>
+    All weights are currently zero. Increase at least one criterion.
+  </div>
+
+  <div class="simulator-results">
+
+    <article class="simulator-result-card">
+      <span>SITE 01</span>
+      <h3>Connecting Ridge</h3>
+      <strong id="simulatorSite01">100.00</strong>
+      <small>/ 100</small>
+      <div class="simulator-track">
+        <div id="simulatorBar01"></div>
+      </div>
+    </article>
+
+    <article class="simulator-result-card">
+      <span>SITE 04</span>
+      <h3>Shackleton Rim</h3>
+      <strong id="simulatorSite04">50.09</strong>
+      <small>/ 100</small>
+      <div class="simulator-track">
+        <div id="simulatorBar04"></div>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="simulator-conclusion">
+    <span class="eyebrow">LIVE COMPARISON</span>
+    <h3 id="simulatorWinner">Connecting Ridge leads</h3>
+    <p id="simulatorExplanation">
+      Adjust the weights to explore different model priorities.
+    </p>
+  </div>
+
+  <button type="button" id="resetSimulator">
+    Reset Original Weights
+  </button>
+
+  <p class="science-note">
+    Experimental weights are normalized automatically so that
+    the active criteria contribute a combined 100%.
+    These scores are relative model outputs, not landing-safety
+    probabilities or official NASA assessments.
+  </p>
+`;
+const scenarioComparison = document.createElement("section");
+
+scenarioComparison.id = "scenarioComparison";
+scenarioComparison.className = "analysis-chart-panel";
+
+scenarioComparison.innerHTML = `
+  <div class="eyebrow">MODEL ROBUSTNESS CHECK</div>
+  <h2>Scenario Comparison Summary</h2>
+
+  <p>
+    Three weighting configurations were tested to examine
+    whether the leading site changes under different priorities.
+  </p>
+
+  <div class="simulator-results">
+
+    <article class="simulator-result-card">
+      <span>ORIGINAL WEIGHTS</span>
+      <h3>30 / 30 / 20 / 20</h3>
+      <p>Site 01: <strong>100.00</strong></p>
+      <p>Site 04: <strong>50.09</strong></p>
+    </article>
+
+    <article class="simulator-result-card">
+      <span>SLOPE-FOCUSED</span>
+      <h3>60 / 20 / 10 / 10</h3>
+      <p>Site 01: <strong>100.00</strong></p>
+      <p>Site 04: <strong>55.06</strong></p>
+    </article>
+
+    <article class="simulator-result-card">
+      <span>ELEVATION-FOCUSED</span>
+      <h3>10 / 10 / 10 / 70</h3>
+      <p>Site 01: <strong>100.00</strong></p>
+      <p>Site 04: <strong>39.74</strong></p>
+    </article>
+
+  </div>
+
+  <div class="simulator-conclusion">
+    <span class="eyebrow">OBSERVED RESULT</span>
+    <h3>Site 01 leads in all three scenarios</h3>
+    <p>
+      The leading site remains unchanged across the three
+      tested weighting configurations, although the score
+      difference varies.
+    </p>
+  </div>
+
+  <p class="science-note">
+    This is a preliminary sensitivity check using three selected
+    scenarios. It does not establish landing safety or absolute
+    mission suitability.
+  </p>
+`;
+
+const dataConfidence = document.createElement("section");
+
+dataConfidence.id = "dataConfidence";
+dataConfidence.className = "analysis-chart-panel";
+
+dataConfidence.innerHTML = `
+  <div class="eyebrow">DATA QUALITY & SCIENTIFIC VALIDATION</div>
+  <h2>Data Provenance & Scientific Confidence</h2>
+
+  <p>
+    This section documents the origin, resolution, processing
+    characteristics, and limitations of the datasets used by LunaOps.
+  </p>
+
+  <div class="simulator-results">
+
+    <article class="simulator-result-card">
+      <span>NASA LOLA-DERIVED TERRAIN</span>
+      <h3>Elevation Data</h3>
+      <p>
+        Both candidate elevation rasters contain 3,200 × 3,200
+        pixels, with 5 m pixel spacing and 10,240,000 valid pixels
+        per site. Their reported source is NASA LOLA LDEM.
+      </p>
+      <strong>Measured raster properties</strong>
+    </article>
+
+    <article class="simulator-result-card">
+      <span>DERIVED TERRAIN ANALYSIS</span>
+      <h3>Slope Data</h3>
+      <p>
+        Both slope rasters have the same dimensions, pixel spacing,
+        and affine transform as their corresponding elevation
+        rasters. This confirms grid alignment within each site.
+      </p>
+      <strong>Grid alignment verified</strong>
+    </article>
+
+    <article class="simulator-result-card">
+      <span>COORDINATE REFERENCE</span>
+      <h3>Spatial Metadata</h3>
+      <p>
+        Candidate rasters use matching polar stereographic
+        projection parameters and a 1,737,400 m lunar reference
+        radius. Their CRS is unnamed and datum unspecified.
+      </p>
+      <strong>Reference requires clarification</strong>
+    </article>
+
+    <article class="simulator-result-card">
+      <span>REGIONAL CONTEXT</span>
+      <h3>LOLA Roughness</h3>
+      <p>
+        The regional roughness raster has 1,000 m pixel spacing.
+        Its coverage includes both candidate areas, but spatial
+        alignment has not been conclusively verified.
+      </p>
+      <strong>Preliminary — not validated</strong>
+    </article>
+
+    <article class="simulator-result-card">
+      <span>MODEL DESIGN</span>
+      <h3>Decision Engine</h3>
+      <p>
+        Four terrain indicators contribute to a weighted relative
+        comparison. Weights and scoring formulas are experimental
+        choices rather than official NASA criteria.
+      </p>
+      <strong>Exploratory decision model</strong>
+    </article>
+
+    <article class="simulator-result-card">
+      <span>DATA INTERPRETATION</span>
+      <h3>Resolution Awareness</h3>
+      <p>
+        The 5 m candidate-site rasters and 1 km roughness raster
+        describe terrain at substantially different spatial scales.
+        Regional roughness must not be treated as detailed
+        landing-area evidence.
+      </p>
+      <strong>Different spatial scales</strong>
+    </article>
+
+  </div>
+
+  <div class="simulator-conclusion">
+    <span class="eyebrow">SCIENTIFIC LIMITATION</span>
+    <h3>Terrain comparison is not landing certification</h3>
+    <p>
+      Lower slope and elevation variation can inform preliminary
+      terrain comparisons, but they do not establish landing safety.
+      Further work is needed to validate coordinate registration
+      and investigate illumination, thermal conditions, boulder
+      hazards, communications, subsurface properties, and
+      operational constraints.
+    </p>
+  </div>
+`;
+
+
+sensitivity.insertAdjacentElement("afterend", weightSimulator);
+
+weightSimulator.insertAdjacentElement("afterend", scenarioComparison);
+
+scenarioComparison.insertAdjacentElement("afterend", dataConfidence);
+
+return { sites, criteria };
+
+  } catch (error) {
+    console.error("Mission Decision Engine could not load:", error);
+  }
+}
+function initializeWeightSimulator(sites, criteria) {
+  const controls = {
+    meanSlope: document.getElementById("weightMeanSlope"),
+    low10: document.getElementById("weightLow10"),
+    low5: document.getElementById("weightLow5"),
+    elevationVariation: document.getElementById("weightElevation")
+  };
+
+  const valueLabels = {
+    meanSlope: "weightMeanSlopeValue",
+    low10: "weightLow10Value",
+    low5: "weightLow5Value",
+    elevationVariation: "weightElevationValue"
+  };
+
+  function updateSimulator() {
+    const weights = {};
+
+    let totalWeight = 0;
+
+    Object.keys(controls).forEach(key => {
+      weights[key] = Number(controls[key].value);
+      totalWeight += weights[key];
+
+      document.getElementById(valueLabels[key]).textContent =
+        weights[key] + "%";
+    });
+
+    document.getElementById("simulatorWeightTotal").textContent =
+      totalWeight + "%";
+
+    const warning = document.getElementById("simulatorWarning");
+
+    if (totalWeight === 0) {
+      warning.hidden = false;
+      return;
+    }
+
+    warning.hidden = true;
+
+    const scores = sites.map(site => {
+      return criteria.reduce((sum, criterion) => {
+        const weight = weights[criterion.key];
+
+        return sum +
+          site[criterion.key + "Score"] *
+          (weight / totalWeight) 
+      }, 0);
+    });
+
+    document.getElementById("simulatorSite01").textContent =
+      scores[0].toFixed(2);
+
+    document.getElementById("simulatorSite04").textContent =
+      scores[1].toFixed(2);
+
+    document.getElementById("simulatorBar01").style.width =
+      scores[0] + "%";
+
+    document.getElementById("simulatorBar04").style.width =
+      scores[1] + "%";
+
+    const winnerIndex = scores[0] >= scores[1] ? 0 : 1;
+
+    document.getElementById("simulatorWinner").textContent =
+      sites[winnerIndex].name + " leads";
+
+    document.getElementById("simulatorExplanation").textContent =
+      scores[0] === scores[1]
+        ? "Both sites have equal scores under these selected weights."
+        : "The leading site changes according to the selected criterion weights.";
+  }
+
+  Object.values(controls).forEach(control => {
+    control.addEventListener("input", updateSimulator);
+  });
+
+  document.getElementById("resetSimulator").addEventListener("click", () => {
+    controls.meanSlope.value = 30;
+    controls.low10.value = 30;
+    controls.low5.value = 20;
+    controls.elevationVariation.value = 20;
+
+    updateSimulator();
+  });
+
+  updateSimulator();
+}
+
+loadMissionDecisionEngine().then(data => {
+  if (!data) return;
+
+  initializeWeightSimulator(data.sites, data.criteria);
+
+  // LunaOps Mission Analysis Report
+  const dataConfidence = document.getElementById("dataConfidence");
+
+  if (!dataConfidence) {
+    console.error("LunaOps report panel could not be found.");
+    return;
+  }
+
+  const reportActions = document.createElement("div");
+
+  reportActions.style.cssText = `
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+  `;
+
+  const reportButton = document.createElement("button");
+
+  reportButton.type = "button";
+  reportButton.textContent = "↓  Download Mission Analysis Report";
+
+  reportButton.style.cssText = `
+    padding: 13px 22px;
+    border: 1px solid #d98acb;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #9b5bba, #d36eae);
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+  `;
+
+  reportButton.addEventListener("click", () => {
+    const sliderIds = {
+      meanSlope: "weightMeanSlope",
+      low10: "weightLow10",
+      low5: "weightLow5",
+      elevationVariation: "weightElevation"
+    };
+
+    const weights = {};
+
+    let totalWeight = 0;
+
+    data.criteria.forEach(criterion => {
+      const slider = document.getElementById(
+        sliderIds[criterion.key]
+      );
+
+      weights[criterion.key] = slider
+        ? Number(slider.value)
+        : criterion.weight;
+
+      totalWeight += weights[criterion.key];
+    });
+
+    const currentScores = data.sites.map(site => {
+      if (totalWeight === 0) return null;
+
+      return data.criteria.reduce((sum, criterion) => {
+        return sum +
+          site[criterion.key + "Score"] *
+          (weights[criterion.key] / totalWeight);
+      }, 0);
+    });
+
+    const format = value =>
+      Number(value).toFixed(2);
+
+    const reportDate = new Date().toLocaleString();
+
+    let report = `
+LunaOps — LUNAR MISSION INTELLIGENCE
+MISSION ANALYSIS REPORT
+==================================================
+
+REPORT GENERATED
+${reportDate}
+
+PROJECT OVERVIEW
+--------------------------------------------------
+LunaOps is an educational lunar south-pole terrain
+comparison and preliminary mission-planning prototype.
+
+This report uses the measurements and decision-model
+results currently loaded in the application.
+
+CANDIDATE SITE ANALYSIS
+==================================================
+`;
+
+    data.sites.forEach((site, index) => {
+      report += `
+${site.name}
+--------------------------------------------------
+Mean slope: ${format(site.meanSlope)} degrees
+Area at or below 10 degrees: ${format(site.low10)}%
+Area at or below 5 degrees: ${format(site.low5)}%
+Elevation standard deviation: ${format(site.elevationVariation)} m
+
+RELATIVE CRITERION SCORES
+`;
+
+      data.criteria.forEach(criterion => {
+        report += `${criterion.key}: ${
+          format(site[criterion.key + "Score"])
+        } / 100\n`;
+      });
+
+      report += `
+Default decision-engine score:
+${format(site.totalScore)} / 100
+
+Current simulator score:
+${
+  currentScores[index] === null
+    ? "Unavailable — all weights are zero."
+    : format(currentScores[index]) + " / 100"
+}
+
+`;
+    });
+
+    report += `
+CURRENT SIMULATOR WEIGHTS
+==================================================
+`;
+
+    data.criteria.forEach(criterion => {
+      report += `${criterion.key}: ${weights[criterion.key]}%\n`;
+    });
+
+    report += `
+Total weight: ${totalWeight}%
+
+DECISION MODEL METHODOLOGY
+==================================================
+The decision engine compares four terrain indicators:
+- Mean slope
+- Area at or below 10 degrees slope
+- Area at or below 5 degrees slope
+- Elevation standard deviation
+
+The model normalizes each criterion between the two
+candidate sites and combines the relative scores using
+the selected weights.
+
+These are experimental, relative comparison scores.
+They are not percentages of landing safety or
+validated probabilities of mission success.
+
+DATA PROVENANCE AND SCIENTIFIC CONFIDENCE
+==================================================
+Elevation:
+Both candidate elevation rasters contain 3,200 × 3,200
+pixels, 5 m pixel spacing and 10,240,000 valid pixels.
+Their reported source is NASA LOLA LDEM.
+
+Slope:
+Each slope raster matches the dimensions, pixel spacing
+and affine transform of its corresponding elevation
+raster. Grid alignment is verified within each site.
+
+Spatial metadata:
+Candidate rasters use matching polar stereographic
+projection parameters and a 1,737,400 m lunar reference
+radius. Their CRS is unnamed and datum unspecified.
+
+Regional roughness:
+The LOLA roughness raster has 1,000 m pixel spacing.
+Coverage includes both candidate areas, but spatial
+alignment has not been conclusively verified.
+
+Resolution:
+The 5 m candidate-site rasters and 1 km roughness
+raster represent substantially different spatial scales.
+Roughness is regional context, not detailed landing-area
+evidence.
+
+SCIENTIFIC LIMITATIONS
+==================================================
+Terrain comparison is not landing certification.
+
+Lower slope and elevation variation can inform
+preliminary terrain comparisons, but they do not
+establish landing safety.
+
+Further work is needed to validate coordinate
+registration and investigate illumination, thermal
+conditions, boulder hazards, communications, subsurface
+properties and operational constraints.
+
+PROJECT STATUS
+==================================================
+Educational research and mission-planning prototype.
+Independent project; not an official NASA system.
+No landing-safety certification is provided.
+
+==================================================
+END OF LunaOps MISSION ANALYSIS REPORT
+`;
+
+    const blob = new Blob(
+      [report],
+      { type: "text/plain;charset=utf-8" }
+    );
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download =
+      "LunaOps_Mission_Analysis_Report_" +
+      new Date().toISOString().slice(0, 10) +
+      ".txt";
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
+// LunaOps PDF Mission Analysis Report
+const pdfButton = document.createElement("button");
+
+pdfButton.type = "button";
+pdfButton.textContent = "↓  Print / Save PDF Report";
+
+pdfButton.style.cssText = `
+  margin-left: 12px;
+  padding: 13px 22px;
+  border: 1px solid #8d9bff;
+  border-radius: 10px;
+  background: #252344;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+`;
+
+pdfButton.addEventListener("click", () => {
+  const rows = data.sites.map(site => `
+    <tr>
+      <td>${site.name}</td>
+      <td>${site.meanSlope.toFixed(2)}°</td>
+      <td>${site.low10.toFixed(2)}%</td>
+      <td>${site.low5.toFixed(2)}%</td>
+      <td>${site.elevationVariation.toFixed(2)} m</td>
+      <td>${site.totalScore.toFixed(2)}</td>
+    </tr>
+  `).join("");
+  const sliderIds = {
+  meanSlope: "weightMeanSlope",
+  low10: "weightLow10",
+  low5: "weightLow5",
+  elevationVariation: "weightElevation"
+};
+
+const weights = {};
+let totalWeight = 0;
+
+data.criteria.forEach(criterion => {
+  const slider = document.getElementById(sliderIds[criterion.key]);
+
+  weights[criterion.key] = slider
+    ? Number(slider.value)
+    : criterion.weight;
+
+  totalWeight += weights[criterion.key];
+});
+
+const weightRows = data.criteria.map(criterion => `
+  <tr>
+    <td>${criterion.key}</td>
+    <td>${weights[criterion.key]}%</td>
+  </tr>
+`).join("");
+
+const scoreRows = data.sites.map(site => {
+  const score = totalWeight === 0
+    ? null
+    : data.criteria.reduce((sum, criterion) => {
+        return sum +
+          site[criterion.key + "Score"] *
+          (weights[criterion.key] / totalWeight);
+      }, 0);
+
+  return `
+    <tr>
+      <td>${site.name}</td>
+      <td>${score === null ? "Unavailable" : score.toFixed(2) + " / 100"}</td>
+    </tr>
+  `;
+}).join("");
+
+  const reportWindow = window.open("", "_blank");
+
+  if (!reportWindow) {
+    alert("Please allow pop-ups for LunaOps to create the PDF report.");
+    return;
+  }
+
+  reportWindow.document.write(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>LunaOps Mission Analysis Report</title>
+      <style>
+        @page {
+          size: A4;
+          margin: 18mm;
+        }
+
+        body {
+          font-family: Arial, sans-serif;
+          color: #25233b;
+          line-height: 1.6;
+          margin: 0;
+        }
+
+        .cover {
+          padding: 55px 30px;
+          background: #17152d;
+          color: white;
+          border-radius: 12px;
+          margin-bottom: 30px;
+        }
+
+        .brand {
+          color: #e5a0df;
+          font-size: 38px;
+          font-weight: 800;
+          letter-spacing: 5px;
+        }
+
+        .subtitle {
+          color: #c8c4e8;
+          font-size: 16px;
+        }
+
+        h2 {
+          color: #874b9f;
+          border-bottom: 2px solid #e7c5e5;
+          padding-bottom: 7px;
+          margin-top: 30px;
+        }
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          font-size: 11px;
+        }
+
+        th {
+          background: #292344;
+          color: white;
+        }
+
+        th, td {
+          border: 1px solid #ddd7e8;
+          padding: 9px 7px;
+          text-align: left;
+        }
+
+        tr:nth-child(even) {
+          background: #f7f2fa;
+        }
+
+        .note {
+          background: #f5edf8;
+          border-left: 4px solid #b36ab6;
+          padding: 13px;
+          margin: 15px 0;
+        }
+
+        .footer {
+          margin-top: 40px;
+          padding-top: 12px;
+          border-top: 1px solid #ddd;
+          color: #777;
+          font-size: 11px;
+        }
+
+        @media print {
+          .cover {
+            break-after: page;
+            print-color-adjust: exact;
+            -webkit-print-color-adjust: exact;
+          }
+
+          th {
+            print-color-adjust: exact;
+            -webkit-print-color-adjust: exact;
+          }
+        }
+      </style>
+    </head>
+
+    <body>
+      <section class="cover">
+        <div class="brand">LunaOps</div>
+        <p class="subtitle">LUNAR MISSION INTELLIGENCE</p>
+        <h1>Mission Analysis Report</h1>
+        <p>Preliminary Lunar South Pole Candidate-Site Comparison</p>
+        <p>Generated: ${new Date().toLocaleString()}</p>
+      </section>
+
+      <h2>1. Project Overview</h2>
+      <p>
+        LunaOps is an independent educational prototype for
+        exploring lunar south-pole terrain data and comparing
+        candidate regions through preliminary mission-planning
+        indicators.
+      </p>
+
+      <h2>2. Candidate-Site Comparison</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Candidate</th>
+            <th>Mean slope</th>
+            <th>Area ≤10°</th>
+            <th>Area ≤5°</th>
+            <th>Elevation variation</th>
+            <th>Relative score</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+
+      <h2>3. Decision Model</h2>
+      <p>The prototype evaluates four terrain indicators:</p>
+      <ul>
+        <li>Mean slope</li>
+        <li>Area at or below 10° slope</li>
+        <li>Area at or below 5° slope</li>
+        <li>Elevation standard deviation</li>
+      </ul>
+
+      <div class="note">
+        Scores are experimental relative comparison indices
+        between the two candidate sites. They are not
+        percentages of landing safety or probabilities of
+        mission success.
+      </div>
+            <h2>4. Live Mission Weight Simulator</h2>
+
+      <p>
+        This section records the simulator settings active
+        when the report was generated.
+      </p>
+
+      <h3>Selected Criterion Weights</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Criterion</th>
+            <th>Weight</th>
+          </tr>
+        </thead>
+        <tbody>${weightRows}</tbody>
+      </table>
+
+      <p><strong>Total weight:</strong> ${totalWeight}%</p>
+
+      <h3>Current Weighted Comparison</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Candidate site</th>
+            <th>Current simulator score</th>
+          </tr>
+        </thead>
+        <tbody>${scoreRows}</tbody>
+      </table>
+
+      <div class="note">
+        These scores depend on the selected weights and
+        are relative comparison indices, not landing-safety
+        probabilities.
+      </div>
+
+      <h2>4. Data Provenance</h2>
+      <ul>
+        <li>Elevation data: reported NASA LOLA LDEM source.</li>
+        <li>Candidate elevation grids: 3,200 × 3,200 pixels at 5 m spacing.</li>
+        <li>Slope grids: matching dimensions and transforms within each site.</li>
+        <li>Regional roughness: 1 km pixel spacing; alignment has not been conclusively verified.</li>
+        <li>Spatial metadata: unnamed CRS and unspecified datum.</li>
+      </ul>
+
+      <h2>5. Scientific Limitations</h2>
+      <p>
+        Terrain comparison is not landing certification.
+        Lower slope and elevation variation do not establish
+        landing safety.
+      </p>
+      <p>
+        Further work is needed to validate coordinate
+        registration and investigate illumination, thermal
+        conditions, boulder hazards, communications,
+        subsurface properties and operational constraints.
+      </p>
+
+      <h2>6. Project Status</h2>
+      <p>
+        Educational research and mission-planning prototype.
+        Independent project; not an official NASA system.
+        No landing-safety certification is provided.
+      </p>
+
+      <div class="footer">
+        LunaOps — Lunar Mission Intelligence |
+        Preliminary research prototype
+      </div>
+
+      <script>
+        window.onload = () => window.print();
+      <\/script>
+    </body>
+    </html>
+  `);
+
+  reportWindow.document.close();
+});
+
+reportActions.appendChild(pdfButton);
+  reportActions.appendChild(reportButton);
+  dataConfidence.appendChild(reportActions);
+});
+
+// Lunar Slope Map Selector
+const slopeMapSite = document.getElementById("slopeMapSite");
+const slopeMapImage = document.getElementById("slopeMapImage");
+
+if (slopeMapSite && slopeMapImage) {
+  slopeMapSite.addEventListener("change", function () {
+    const selectedSite = this.value;
+
+    const mapDetails = {
+      site01: {
+        image: "data/site01_slope_map.png",
+        alt: "NASA slope map for Site 01 — Connecting Ridge"
+      },
+      site04: {
+        image: "data/site04_slope_map.png",
+        alt: "NASA slope map for Site 04 — Shackleton Rim"
+      }
+    };
+
+    const selectedMap = mapDetails[selectedSite];
+
+    if (selectedMap) {
+      slopeMapImage.src = selectedMap.image;
+      slopeMapImage.alt = selectedMap.alt;
+    }
+  });
+}
+</script>
+
+
+
+
+
+<script>
+(() => {
+  const siteInput = document.getElementById("horizonSite");
+  const timeInput = document.getElementById("horizonTime");
+  const loadButton = document.getElementById("horizonLoad");
+  const status = document.getElementById("horizonStatus");
+
+  if (!siteInput || !timeInput || !loadButton) return;
+
+  const localNow = new Date(Date.now() - new Date().getTimezoneOffset() * 60000);
+  timeInput.value = localNow.toISOString().slice(0, 16);
+
+  function setText(id, value) {
+    document.getElementById(id).textContent = value;
+  }
+
+  function placeMarker(id, azimuth, elevation) {
+    const marker = document.getElementById(id);
+    const radius = 120 * (90 - elevation) / 90;
+    const angle = (azimuth - 90) * Math.PI / 180;
+    const x = 140 + radius * Math.cos(angle);
+    const y = 140 + radius * Math.sin(angle);
+    marker.style.left = `${x}px`;
+    marker.style.top = `${y}px`;
+    marker.style.display = "block";
+  }
+
+  async function loadHorizon() {
+    if (!timeInput.value) {
+      status.textContent = "Please select an observation date and time.";
+      return;
+    }
+
+    loadButton.disabled = true;
+    loadButton.textContent = "Calculating...";
+    status.textContent = "Requesting apparent positions from NASA/JPL Horizons...";
+
+    try {
+      const utcTime = new Date(timeInput.value).toISOString();
+      const params = new URLSearchParams({
+        site: siteInput.value,
+        datetime: utcTime
+      });
+
+      const response = await fetch(`/api/horizon?${params.toString()}`);
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || "The position request failed.");
       }
 
-      result.textContent =
-        "Study area A: " + a +
-        "\nStudy area B: " + b +
-        "\n\nComparison created successfully." +
-        "\nTerrain measurements are not loaded yet." +
-        "\nNext step: integrate verified NASA terrain data.";
+      setText("horizonSunAz", `${data.sun.azimuth_deg.toFixed(3)}°`);
+      setText("horizonSunEl", `${data.sun.elevation_deg.toFixed(3)}°`);
+      setText("horizonEarthAz", `${data.earth.azimuth_deg.toFixed(3)}°`);
+      setText("horizonEarthEl", `${data.earth.elevation_deg.toFixed(3)}°`);
+
+      placeMarker("horizonSunMarker", data.sun.azimuth_deg, data.sun.elevation_deg);
+      placeMarker("horizonEarthMarker", data.earth.azimuth_deg, data.earth.elevation_deg);
+
+      document.getElementById("horizonWarning").textContent = data.warning;
+      status.textContent =
+        `Results received · ${data.timestamp_utc} · Source: ${data.source} · Coordinates: ${data.coordinate_status}`;
+    } catch (error) {
+      status.textContent = `Unable to load positions: ${error.message}`;
+    } finally {
+      loadButton.disabled = false;
+      loadButton.textContent = "Calculate positions";
+    }
+  }
+
+  loadButton.addEventListener("click", loadHorizon);
+  loadHorizon();
+})();
+</script>
+
+
+<script>
+(() => {
+  const dateInput = document.getElementById("timelineDate");
+  const timeInput = document.getElementById("timelineStartTime");
+  const durationInput = document.getElementById("timelineDuration");
+  const intervalInput = document.getElementById("timelineInterval");
+  const loadButton = document.getElementById("timelineLoad");
+  const slider = document.getElementById("timelineSlider");
+  const status = document.getElementById("timelineStatus");
+  const readings = document.getElementById("timelineReadings");
+  const hourLabel = document.getElementById("timelineHour");
+  const warning = document.getElementById("timelineWarning");
+
+  if (!dateInput || !timeInput || !durationInput ||
+      !intervalInput || !loadButton || !slider) return;
+
+  const pad = n => String(n).padStart(2, "0");
+  const now = new Date();
+
+  dateInput.value =
+    `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+  timeInput.value = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+
+  let timelineData = null;
+  let timelineStart = null;
+  let intervalMinutes = 60;
+  let durationHours = 24;
+
+  function chartSvg(elementId, seriesA, seriesB, selectedIndex) {
+    const svg = document.getElementById(elementId);
+    const values = [...seriesA, ...seriesB].map(p => p.elevation_deg);
+
+    let min = Math.min(...values);
+    let max = Math.max(...values);
+
+    const padding = Math.max((max-min)*0.25, 0.15);
+    min -= padding;
+    max += padding;
+
+    const left = 58, right = 710, top = 22, bottom = 185;
+    const sampleCount = seriesA.length;
+    const x = i => left + (i / Math.max(sampleCount-1, 1))*(right-left);
+    const y = v => bottom - ((v-min)/(max-min))*(bottom-top);
+
+    let out = "";
+
+    for (let i=0; i<=4; i++) {
+      const value = min + (max-min)*i/4;
+      const yy = y(value);
+
+      out += `<line x1="${left}" y1="${yy}" x2="${right}" y2="${yy}" stroke="rgba(220,190,220,.16)"/>`;
+      out += `<text x="${left-9}" y="${yy+4}" text-anchor="end" fill="#cbbbd2" font-size="11">${value.toFixed(2)}°</text>`;
+    }
+
+    if (min < 0 && max > 0) {
+      out += `<line x1="${left}" y1="${y(0)}" x2="${right}" y2="${y(0)}" stroke="#f1c56b" stroke-dasharray="5 5" opacity=".8"/>`;
+    }
+
+    const tickCount = Math.min(4, durationHours);
+
+    for (let i=0; i<=tickCount; i++) {
+      const elapsedHours = durationHours*i/tickCount;
+      const index = Math.round(elapsedHours*60/intervalMinutes);
+      const xx = x(index);
+
+      out += `<line x1="${xx}" y1="${top}" x2="${xx}" y2="${bottom}" stroke="rgba(220,190,220,.10)"/>`;
+      out += `<text x="${xx}" y="211" text-anchor="middle" fill="#cbbbd2" font-size="11">${elapsedHours.toFixed(elapsedHours % 1 ? 1 : 0)}h</text>`;
+    }
+
+    const makePath = (points, color) => {
+      const pathData = points.map((p,i) =>
+        `${i===0 ? "M":"L"} ${x(i)} ${y(p.elevation_deg)}`
+      ).join(" ");
+
+      return `<path d="${pathData}" fill="none" stroke="${color}" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>`;
+    };
+
+    out += makePath(seriesA, "#e6a0d5");
+    out += makePath(seriesB, "#78c9ed");
+
+    const selectedX = x(selectedIndex);
+
+    out += `<line x1="${selectedX}" y1="${top}" x2="${selectedX}" y2="${bottom}" stroke="#fff" stroke-width="1.5" stroke-dasharray="4 4"/>`;
+
+    [
+      {points:seriesA,color:"#e6a0d5"},
+      {points:seriesB,color:"#78c9ed"}
+    ].forEach(item => {
+      const point = item.points[selectedIndex];
+
+      out += `<circle cx="${selectedX}" cy="${y(point.elevation_deg)}" r="5" fill="${item.color}" stroke="#fff" stroke-width="1.5"/>`;
     });
-  </script>
+
+    svg.innerHTML = out;
+  }
+
+  function updateSelectedHour() {
+    if (!timelineData) return;
+
+    const index = Number(slider.value);
+    const selectedTime = new Date(
+      timelineData.site01.sun[index].timestamp_utc
+    );
+
+    hourLabel.textContent =
+      `${selectedTime.toLocaleString()} · Sample ${index+1}`;
+
+    const aSun = timelineData.site01.sun[index];
+    const bSun = timelineData.site04.sun[index];
+    const aEarth = timelineData.site01.earth[index];
+    const bEarth = timelineData.site04.earth[index];
+
+    const card = (title, sun, earth) => `
+      <div class="timeline-reading">
+        <h4>${title}</h4>
+        <p>Sun elevation: <strong>${sun.elevation_deg.toFixed(3)}°</strong></p>
+        <p>Earth elevation: <strong>${earth.elevation_deg.toFixed(3)}°</strong></p>
+      </div>`;
+
+    readings.innerHTML =
+      card("Site 01 · Connecting Ridge",aSun,aEarth) +
+      card("Site 04 · Shackleton Rim",bSun,bEarth);
+
+    chartSvg("timelineSunChart",
+      timelineData.site01.sun,timelineData.site04.sun,index);
+
+    chartSvg("timelineEarthChart",
+      timelineData.site01.earth,timelineData.site04.earth,index);
+  }
+
+  async function loadTimeline() {
+    loadButton.disabled = true;
+    loadButton.textContent = "Requesting NASA data...";
+    status.textContent = "Requesting observations from NASA/JPL Horizons...";
+    timelineData = null;
+    slider.disabled = true;
+
+    try {
+      if (!dateInput.value || !timeInput.value) {
+        throw new Error("Select both an observation date and start time.");
+      }
+
+      const localStart = new Date(
+        `${dateInput.value}T${timeInput.value}:00`
+      );
+
+      if (Number.isNaN(localStart.getTime())) {
+        throw new Error("Please select a valid date and time.");
+      }
+
+      durationHours = Number(durationInput.value);
+      intervalMinutes = Number(intervalInput.value);
+
+      const params = new URLSearchParams({
+        date: localStart.toISOString(),
+        duration_hours: String(durationHours),
+        interval_minutes: String(intervalMinutes)
+      });
+
+      const response = await fetch(`/api/horizon-series?${params.toString()}`);
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || "The timeline request failed.");
+      }
+
+      const expected = data.expected_samples;
+
+      for (const id of ["site01","site04"]) {
+        for (const body of ["sun","earth"]) {
+          const series = data.sites[id]?.[body];
+
+          if (!Array.isArray(series) || series.length !== expected) {
+            throw new Error(`Incomplete timeline data for ${id} (${body}). Expected ${expected} samples.`);
+          }
+        }
+      }
+
+      timelineData = data.sites;
+      timelineStart = localStart;
+
+      slider.min = "0";
+      slider.max = String(expected-1);
+      slider.step = "1";
+      slider.value = "0";
+      slider.disabled = false;
+
+      const boundaryLabels = document.querySelectorAll(
+        ".timeline-slider-wrap .timeline-hour-label span"
+      );
+
+      if (boundaryLabels.length >= 3) {
+        boundaryLabels[0].textContent =
+          `Start · ${timeInput.value}`;
+        boundaryLabels[1].textContent =
+          `Midpoint · ${new Date(localStart.getTime()+durationHours*1800000).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}`;
+        boundaryLabels[2].textContent =
+          `End · ${new Date(localStart.getTime()+durationHours*3600000).toLocaleString()}`;
+      }
+
+      updateSelectedHour();
+
+      warning.textContent = data.warning +
+        ` This is a ${durationHours}-hour Earth-time observation window sampled every ${intervalMinutes} minutes. ` +
+        "Apparent celestial elevation is not terrain-obstructed visibility or a validated illumination forecast.";
+
+      status.textContent =
+        `Observations loaded · ${data.source} · ${data.interval} cadence · ` +
+        `${expected} samples per object per site · Coordinates: ${data.coordinate_status}`;
+    } catch (error) {
+      status.textContent = `Unable to load timeline: ${error.message}`;
+      readings.innerHTML = "<p>Timeline unavailable. Adjust the settings or try again.</p>";
+    } finally {
+      loadButton.disabled = false;
+      loadButton.textContent = "Load mission timeline";
+    }
+  }
+
+  loadButton.addEventListener("click",loadTimeline);
+  slider.addEventListener("input",updateSelectedHour);
+})();
+
+</script>
+
 </body>
 </html>

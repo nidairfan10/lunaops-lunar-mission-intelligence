@@ -1,0 +1,17 @@
+{
+  "source": "Site04_final_adj_5mpp_slp.tif",
+  "valid_pixels": 10240000,
+  "minimum_slope": 0.0,
+  "maximum_slope": 69.647,
+  "mean_slope": 20.664,
+  "median_slope": 20.551,
+  "standard_deviation": 10.102,
+  "pixels_at_or_below_5_degrees_percent": 4.66,
+  "pixels_at_or_below_10_degrees_percent": 18.81,
+  "slope_distribution": {
+    "0_to_5_degrees_percent": 4.66,
+    "above_5_to_10_degrees_percent": 14.15,
+    "above_10_to_15_degrees_percent": 18.17,
+    "above_15_degrees_percent": 63.02
+  }
+}
